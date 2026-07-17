@@ -807,7 +807,7 @@
             <div class="agenda-item"><div class="agenda-num">1</div><div>الفرق بجملة واحدة</div></div>
             <div class="agenda-item"><div class="agenda-num">2</div><div>ماذا يوجد في النسختين؟</div></div>
             <div class="agenda-item"><div class="agenda-num">3</div><div>ماذا يزيد في Enterprise فقط؟</div></div>
-            <div class="agenda-item"><div class="agenda-num">4</div><div>حاسبة التسعير للنسختين</div></div>
+            <div class="agenda-item"><div class="agenda-num">4</div><div>حاسبة Community ثم Enterprise</div></div>
             <div class="agenda-item"><div class="agenda-num">5</div><div>سيناريوهات شركات مشابهة</div></div>
             <div class="agenda-item"><div class="agenda-num">6</div><div>توصية واضحة وخطوات تالية</div></div>
           </div>
@@ -1047,24 +1047,88 @@
       </div>
     </section>
 
-    <!-- 9 Pricing calculator -->
-    <section class="slide" data-title="حاسبة التسعير">
+    <!-- 9 Community calculator -->
+    <section class="slide" data-title="حاسبة Community">
       <div class="slide-shell">
         <div class="slide-inner">
           <div class="topbar">
             <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
-            <span class="kicker">احسب أمام العميل مباشرة</span>
+            <span class="kicker">حاسبة مستقلة — Community</span>
           </div>
-          <h2>حاسبة مقارنة التكلفة السنوية</h2>
+          <h2>تكلفة Odoo Community بالريال</h2>
+          <div class="calc-layout">
+            <div class="calc-form panel" style="margin:0;">
+              <div class="field">
+                <label for="commUsers">عدد المستخدمين (للتخطيط فقط)</label>
+                <input id="commUsers" type="number" min="1" max="500" value="10" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="commHost">استضافة شهرية (ر.س)</label>
+                  <input id="commHost" type="number" min="0" step="50" value="200" />
+                </div>
+                <div class="field">
+                  <label for="commMaint">صيانة / دعم شهري (ر.س)</label>
+                  <input id="commMaint" type="number" min="0" step="50" value="750" />
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="commBackup">نسخ احتياطي / أمان شهري (ر.س)</label>
+                  <input id="commBackup" type="number" min="0" step="50" value="100" />
+                </div>
+                <div class="field">
+                  <label for="commImpl">تنفيذ أولي لمرة واحدة (ر.س)</label>
+                  <input id="commImplInput" type="number" min="0" step="500" value="0" />
+                </div>
+              </div>
+              <p class="note">Community بلا رسوم ترخيص من أودو. التكلفة = تشغيل النظام (استضافة + صيانة + دعم). جميع المبالغ بالريال السعودي.</p>
+            </div>
+
+            <div class="calc-results">
+              <div class="result-card community">
+                <div class="head">
+                  <h3>إجمالي Community</h3>
+                  <span class="badge">ترخيص = 0 ر.س</span>
+                </div>
+                <div class="total" id="commYear">—</div>
+                <div class="breakdown">
+                  <div><span>التشغيل الشهري</span><strong id="commMonth">—</strong></div>
+                  <div><span>استضافة سنويًا</span><span id="commHostYear">—</span></div>
+                  <div><span>صيانة سنويًا</span><span id="commMaintYear">—</span></div>
+                  <div><span>نسخ احتياطي سنويًا</span><span id="commBackupYear">—</span></div>
+                  <div><span>تنفيذ لمرة واحدة</span><span id="commImpl">—</span></div>
+                  <div><span>تكلفة تقريبية / مستخدم / شهر</span><span id="commPerUser">—</span></div>
+                </div>
+              </div>
+              <div class="diff-card">
+                <strong>ملخص Community</strong>
+                <span id="commSummary" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 Enterprise calculator -->
+    <section class="slide" data-title="حاسبة Enterprise">
+      <div class="slide-shell">
+        <div class="slide-inner">
+          <div class="topbar">
+            <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
+            <span class="kicker">حاسبة مستقلة — Enterprise</span>
+          </div>
+          <h2>تكلفة Odoo Enterprise بالريال</h2>
           <div class="calc-layout">
             <div class="calc-form panel" style="margin:0;">
               <div class="field-row">
                 <div class="field">
-                  <label for="users">عدد المستخدمين</label>
-                  <input id="users" type="number" min="1" max="500" value="10" />
+                  <label for="entUsers">عدد المستخدمين</label>
+                  <input id="entUsers" type="number" min="1" max="500" value="10" />
                 </div>
                 <div class="field">
-                  <label for="region">قائمة أسعار أودو (معروضة بالريال)</label>
+                  <label for="region">قائمة أسعار أودو (ر.س)</label>
                   <select id="region">
                     <option value="mena" selected>السعودية / الشرق الأوسط</option>
                     <option value="eu">أوروبا (محوّل لر.س)</option>
@@ -1083,47 +1147,22 @@
 
               <div class="field-row">
                 <div class="field">
-                  <label for="commHost">Community — استضافة شهرية (ر.س)</label>
-                  <input id="commHost" type="number" min="0" step="50" value="200" />
-                </div>
-                <div class="field">
-                  <label for="commMaint">Community — صيانة/دعم شهري (ر.س)</label>
-                  <input id="commMaint" type="number" min="0" step="50" value="750" />
-                </div>
-              </div>
-
-              <div class="field-row">
-                <div class="field">
-                  <label for="entHost">Enterprise — استضافة إضافية شهرية (ر.س)</label>
+                  <label for="entHost">استضافة إضافية شهرية (ر.س)</label>
                   <input id="entHost" type="number" min="0" step="50" value="0" />
                 </div>
                 <div class="field">
-                  <label for="implCost">تنفيذ أولي لمرة واحدة (ر.س)</label>
-                  <input id="implCost" type="number" min="0" step="500" value="0" />
+                  <label for="entImplInput">تنفيذ أولي لمرة واحدة (ر.س)</label>
+                  <input id="entImplInput" type="number" min="0" step="500" value="0" />
                 </div>
               </div>
 
-              <p class="note">جميع المبالغ بالريال السعودي (ر.س). Standard غالبًا بدون استضافة إضافية. لـ Custom على Odoo.sh أضف الاستضافة يدويًا.</p>
+              <p class="note">السعر = (سعر المستخدم × عدد المستخدمين) + استضافة إضافية إن وجدت. Standard غالبًا بدون استضافة إضافية. لـ Custom على Odoo.sh أضف الاستضافة.</p>
             </div>
 
             <div class="calc-results">
-              <div class="result-card community">
-                <div class="head">
-                  <h3>Community</h3>
-                  <span class="badge">ترخيص مجاني</span>
-                </div>
-                <div class="total" id="commYear">—</div>
-                <div class="breakdown">
-                  <div><span>شهريًا</span><strong id="commMonth">—</strong></div>
-                  <div><span>استضافة سنويًا</span><span id="commHostYear">—</span></div>
-                  <div><span>صيانة سنويًا</span><span id="commMaintYear">—</span></div>
-                  <div><span>تنفيذ لمرة واحدة</span><span id="commImpl">—</span></div>
-                </div>
-              </div>
-
               <div class="result-card enterprise">
                 <div class="head">
-                  <h3>Enterprise</h3>
+                  <h3>إجمالي Enterprise</h3>
                   <span class="badge paid" id="entBadge">Standard</span>
                 </div>
                 <div class="total" id="entYear">—</div>
@@ -1133,12 +1172,12 @@
                   <div><span>ترخيص سنوي</span><span id="entLicYear">—</span></div>
                   <div><span>استضافة إضافية سنويًا</span><span id="entHostYear">—</span></div>
                   <div><span>تنفيذ لمرة واحدة</span><span id="entImpl">—</span></div>
+                  <div><span>التشغيل الشهري الكلي</span><span id="entMonth">—</span></div>
                 </div>
               </div>
-
               <div class="diff-card">
-                <strong id="diffTitle">فرق السنة الأولى</strong>
-                <span id="diffText" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
+                <strong>ملخص Enterprise</strong>
+                <span id="entSummary" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
               </div>
             </div>
           </div>
@@ -1400,10 +1439,7 @@
       touchX = null;
     });
 
-    /* ===== Pricing calculator (SAR) =====
-       Official Odoo yearly rates converted to SAR for client meetings.
-       USD→SAR = 3.75 | EUR→SAR ≈ 4.05
-    */
+    /* ===== Separate SAR calculators: Community + Enterprise ===== */
     const USD_SAR = 3.75;
     const EUR_SAR = 4.05;
     const PRICING = {
@@ -1411,74 +1447,69 @@
       eu:   { standard: 24.90 * EUR_SAR, custom: 37.40 * EUR_SAR },
       us:   { standard: 31.10 * USD_SAR, custom: 61.00 * USD_SAR }
     };
-    const CUSTOM_HOST_DEFAULT = 300; // ر.س تقريبًا لاستضافة Odoo.sh
+    const CUSTOM_HOST_DEFAULT = 300;
 
     const $ = (id) => document.getElementById(id);
 
     function money(amount) {
-      const n = Math.round(amount);
-      return n.toLocaleString("en-US") + " ر.س";
+      return Math.round(amount).toLocaleString("en-US") + " ر.س";
     }
 
-    function calcPricing() {
-      const users = Math.max(1, Number($("users").value) || 1);
-      const regionKey = $("region").value;
-      const region = PRICING[regionKey];
+    function calcCommunity() {
+      const users = Math.max(1, Number($("commUsers").value) || 1);
+      const host = Math.max(0, Number($("commHost").value) || 0);
+      const maint = Math.max(0, Number($("commMaint").value) || 0);
+      const backup = Math.max(0, Number($("commBackup").value) || 0);
+      const impl = Math.max(0, Number($("commImplInput").value) || 0);
+
+      const month = host + maint + backup;
+      const year = month * 12 + impl;
+
+      $("commMonth").textContent = money(month) + " / شهر";
+      $("commYear").textContent = money(year) + " / السنة الأولى";
+      $("commHostYear").textContent = money(host * 12);
+      $("commMaintYear").textContent = money(maint * 12);
+      $("commBackupYear").textContent = money(backup * 12);
+      $("commImpl").textContent = money(impl);
+      $("commPerUser").textContent = money(month / users);
+      $("commSummary").textContent =
+        `ترخيص أودو = 0 ر.س. تشغيل شهري ${money(month)} لـ ${users} مستخدمين ≈ ${money(month / users)} لكل مستخدم / شهر. السنة الأولى = ${money(year)}.`;
+    }
+
+    function calcEnterprise() {
+      const users = Math.max(1, Number($("entUsers").value) || 1);
+      const region = PRICING[$("region").value];
       const plan = document.querySelector('input[name="entPlan"]:checked')?.value || "standard";
       const rate = region[plan];
+      const host = Math.max(0, Number($("entHost").value) || 0);
+      const impl = Math.max(0, Number($("entImplInput").value) || 0);
 
-      const commHost = Math.max(0, Number($("commHost").value) || 0);
-      const commMaint = Math.max(0, Number($("commMaint").value) || 0);
-      const entHost = Math.max(0, Number($("entHost").value) || 0);
-      const impl = Math.max(0, Number($("implCost").value) || 0);
-
-      const commMonth = commHost + commMaint;
-      const commYear = commMonth * 12 + impl;
-
-      const entLicMonth = users * rate;
-      const entMonth = entLicMonth + entHost;
-      const entYear = entMonth * 12 + impl;
-
-      $("commMonth").textContent = money(commMonth) + " / شهر";
-      $("commYear").textContent = money(commYear) + " / السنة الأولى";
-      $("commHostYear").textContent = money(commHost * 12);
-      $("commMaintYear").textContent = money(commMaint * 12);
-      $("commImpl").textContent = money(impl);
+      const licMonth = users * rate;
+      const month = licMonth + host;
+      const year = month * 12 + impl;
 
       $("entBadge").textContent = plan === "custom" ? "Custom" : "Standard";
       $("entRate").textContent = rate.toFixed(2) + " ر.س";
-      $("entLicMonth").textContent = money(entLicMonth);
-      $("entLicYear").textContent = money(entLicMonth * 12);
-      $("entHostYear").textContent = money(entHost * 12);
+      $("entLicMonth").textContent = money(licMonth);
+      $("entLicYear").textContent = money(licMonth * 12);
+      $("entHostYear").textContent = money(host * 12);
       $("entImpl").textContent = money(impl);
-      $("entYear").textContent = money(entYear) + " / السنة الأولى";
-
-      const diff = entYear - commYear;
-      const perUserYear = entLicMonth * 12 / users;
-
-      if (diff > 0) {
-        $("diffTitle").textContent = "Enterprise أعلى في السنة الأولى بـ " + money(diff);
-        $("diffText").textContent =
-          `مقابل ذلك تحصل على ميزات ودعم وترقيات رسمية. تكلفة ترخيص Enterprise ≈ ${money(perUserYear)} لكل مستخدم / سنة (${users} مستخدمين، خطة ${plan === "custom" ? "Custom" : "Standard"}).`;
-      } else if (diff < 0) {
-        $("diffTitle").textContent = "Enterprise أوفر في هذا السيناريو بـ " + money(Math.abs(diff));
-        $("diffText").textContent =
-          "غالبًا لأن تكلفة صيانة Community مرتفعة. راجع أرقام الاستضافة والدعم — قد تكون Enterprise أوفر تشغيليًا.";
-      } else {
-        $("diffTitle").textContent = "التكلفة متقاربة في السنة الأولى";
-        $("diffText").textContent = "عند تساوي التكلفة، القرار يعتمد على الميزات المطلوبة ومستوى الدعم الذي تحتاجه.";
-      }
+      $("entMonth").textContent = money(month) + " / شهر";
+      $("entYear").textContent = money(year) + " / السنة الأولى";
+      $("entSummary").textContent =
+        `خطة ${plan === "custom" ? "Custom" : "Standard"}: ${rate.toFixed(2)} ر.س × ${users} مستخدم = ${money(licMonth)} / شهر للترخيص. إجمالي السنة الأولى = ${money(year)}.`;
     }
 
-    ["users", "region", "commHost", "commMaint", "entHost", "implCost"].forEach((id) => {
-      $(id).addEventListener("input", calcPricing);
-      $(id).addEventListener("change", calcPricing);
-    });
-    document.querySelectorAll('input[name="entPlan"]').forEach((el) => {
-      el.addEventListener("change", calcPricing);
+    ["commUsers", "commHost", "commMaint", "commBackup", "commImplInput"].forEach((id) => {
+      $(id).addEventListener("input", calcCommunity);
+      $(id).addEventListener("change", calcCommunity);
     });
 
-    // Sensible host default when switching Enterprise plan
+    ["entUsers", "region", "entHost", "entImplInput"].forEach((id) => {
+      $(id).addEventListener("input", calcEnterprise);
+      $(id).addEventListener("change", calcEnterprise);
+    });
+
     document.querySelectorAll('input[name="entPlan"]').forEach((el) => {
       el.addEventListener("change", () => {
         if (el.value === "standard" && Number($("entHost").value) === CUSTOM_HOST_DEFAULT) {
@@ -1487,11 +1518,12 @@
         if (el.value === "custom" && Number($("entHost").value) === 0) {
           $("entHost").value = CUSTOM_HOST_DEFAULT;
         }
-        calcPricing();
+        calcEnterprise();
       });
     });
 
-    calcPricing();
+    calcCommunity();
+    calcEnterprise();
     render();
   </script>
 </body>
