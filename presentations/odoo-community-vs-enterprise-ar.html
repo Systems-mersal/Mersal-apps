@@ -1006,7 +1006,7 @@
           <div class="price-tiers">
             <div class="tier">
               <div class="name">Community</div>
-              <div class="amt">$0 ترخيص</div>
+              <div class="amt">0 ر.س ترخيص</div>
               <ul>
                 <li>لا رسوم مستخدمين لأودو</li>
                 <li>تدفع الاستضافة والصيانة</li>
@@ -1015,7 +1015,7 @@
             </div>
             <div class="tier">
               <div class="name">Enterprise Standard</div>
-              <div class="amt">من ≈ $9–31 / مستخدم</div>
+              <div class="amt">من ≈ 34–117 ر.س / مستخدم</div>
               <ul>
                 <li>كل التطبيقات</li>
                 <li>استضافة Odoo Online</li>
@@ -1024,7 +1024,7 @@
             </div>
             <div class="tier">
               <div class="name">Enterprise Custom</div>
-              <div class="amt">من ≈ $14–61 / مستخدم</div>
+              <div class="amt">من ≈ 51–229 ر.س / مستخدم</div>
               <ul>
                 <li>Studio + شركات متعددة + API</li>
                 <li>Online / Odoo.sh / ذاتي</li>
@@ -1042,7 +1042,7 @@
               <p>السعر الشهري لكل مستخدم × 12، ويختلف حسب الدولة وخطة Standard/Custom.</p>
             </div>
           </div>
-          <p class="note">مرجع الأسعار الرسمية: odoo.com/pricing — الأسعار المعروضة تقريبية للاجتماع، والعرض النهائي يُحدَّد حسب دولة العميل وعدد المستخدمين.</p>
+          <p class="note">مرجع الأسعار الرسمية: odoo.com/pricing — معروضة هنا بالريال السعودي (ر.س) بسعر تقريبي 1 USD = 3.75 ر.س. العرض النهائي يُحدَّد حسب دولة العميل وعدد المستخدمين.</p>
         </div>
       </div>
     </section>
@@ -1064,11 +1064,11 @@
                   <input id="users" type="number" min="1" max="500" value="10" />
                 </div>
                 <div class="field">
-                  <label for="region">المنطقة / قائمة الأسعار</label>
+                  <label for="region">قائمة أسعار أودو (معروضة بالريال)</label>
                   <select id="region">
-                    <option value="mena" selected>الشرق الأوسط (USD)</option>
-                    <option value="eu">أوروبا (EUR)</option>
-                    <option value="us">الولايات المتحدة (USD)</option>
+                    <option value="mena" selected>السعودية / الشرق الأوسط</option>
+                    <option value="eu">أوروبا (محوّل لر.س)</option>
+                    <option value="us">أمريكا (محوّل لر.س)</option>
                   </select>
                 </div>
               </div>
@@ -1083,27 +1083,27 @@
 
               <div class="field-row">
                 <div class="field">
-                  <label for="commHost">Community — استضافة شهرية</label>
-                  <input id="commHost" type="number" min="0" step="1" value="50" />
+                  <label for="commHost">Community — استضافة شهرية (ر.س)</label>
+                  <input id="commHost" type="number" min="0" step="50" value="200" />
                 </div>
                 <div class="field">
-                  <label for="commMaint">Community — صيانة/دعم شهري</label>
-                  <input id="commMaint" type="number" min="0" step="1" value="200" />
+                  <label for="commMaint">Community — صيانة/دعم شهري (ر.س)</label>
+                  <input id="commMaint" type="number" min="0" step="50" value="750" />
                 </div>
               </div>
 
               <div class="field-row">
                 <div class="field">
-                  <label for="entHost">Enterprise — استضافة إضافية شهرية</label>
-                  <input id="entHost" type="number" min="0" step="1" value="0" />
+                  <label for="entHost">Enterprise — استضافة إضافية شهرية (ر.س)</label>
+                  <input id="entHost" type="number" min="0" step="50" value="0" />
                 </div>
                 <div class="field">
-                  <label for="implCost">تنفيذ أولي لمرة واحدة (اختياري)</label>
-                  <input id="implCost" type="number" min="0" step="100" value="0" />
+                  <label for="implCost">تنفيذ أولي لمرة واحدة (ر.س)</label>
+                  <input id="implCost" type="number" min="0" step="500" value="0" />
                 </div>
               </div>
 
-              <p class="note">Standard غالبًا استضافة Online ضمن الاشتراك (0 إضافية). لـ Custom على Odoo.sh أضف تكلفة الاستضافة يدويًا.</p>
+              <p class="note">جميع المبالغ بالريال السعودي (ر.س). Standard غالبًا بدون استضافة إضافية. لـ Custom على Odoo.sh أضف الاستضافة يدويًا.</p>
             </div>
 
             <div class="calc-results">
@@ -1400,21 +1400,24 @@
       touchX = null;
     });
 
-    /* ===== Pricing calculator =====
-       Approximate yearly-billed official rates for client meetings.
-       Source baseline: odoo.com/pricing + regional pricelists.
+    /* ===== Pricing calculator (SAR) =====
+       Official Odoo yearly rates converted to SAR for client meetings.
+       USD→SAR = 3.75 | EUR→SAR ≈ 4.05
     */
+    const USD_SAR = 3.75;
+    const EUR_SAR = 4.05;
     const PRICING = {
-      mena: { currency: "USD", symbol: "$", standard: 8.95, custom: 13.60 },
-      eu:   { currency: "EUR", symbol: "€", standard: 24.90, custom: 37.40 },
-      us:   { currency: "USD", symbol: "$", standard: 31.10, custom: 61.00 }
+      mena: { standard: 8.95 * USD_SAR, custom: 13.60 * USD_SAR },
+      eu:   { standard: 24.90 * EUR_SAR, custom: 37.40 * EUR_SAR },
+      us:   { standard: 31.10 * USD_SAR, custom: 61.00 * USD_SAR }
     };
+    const CUSTOM_HOST_DEFAULT = 300; // ر.س تقريبًا لاستضافة Odoo.sh
 
     const $ = (id) => document.getElementById(id);
 
-    function money(amount, symbol) {
+    function money(amount) {
       const n = Math.round(amount);
-      return symbol + n.toLocaleString("en-US");
+      return n.toLocaleString("en-US") + " ر.س";
     }
 
     function calcPricing() {
@@ -1423,7 +1426,6 @@
       const region = PRICING[regionKey];
       const plan = document.querySelector('input[name="entPlan"]:checked')?.value || "standard";
       const rate = region[plan];
-      const symbol = region.symbol;
 
       const commHost = Math.max(0, Number($("commHost").value) || 0);
       const commMaint = Math.max(0, Number($("commMaint").value) || 0);
@@ -1437,29 +1439,29 @@
       const entMonth = entLicMonth + entHost;
       const entYear = entMonth * 12 + impl;
 
-      $("commMonth").textContent = money(commMonth, symbol) + " / شهر";
-      $("commYear").textContent = money(commYear, symbol) + " / السنة الأولى";
-      $("commHostYear").textContent = money(commHost * 12, symbol);
-      $("commMaintYear").textContent = money(commMaint * 12, symbol);
-      $("commImpl").textContent = money(impl, symbol);
+      $("commMonth").textContent = money(commMonth) + " / شهر";
+      $("commYear").textContent = money(commYear) + " / السنة الأولى";
+      $("commHostYear").textContent = money(commHost * 12);
+      $("commMaintYear").textContent = money(commMaint * 12);
+      $("commImpl").textContent = money(impl);
 
       $("entBadge").textContent = plan === "custom" ? "Custom" : "Standard";
-      $("entRate").textContent = symbol + rate.toFixed(2);
-      $("entLicMonth").textContent = money(entLicMonth, symbol);
-      $("entLicYear").textContent = money(entLicMonth * 12, symbol);
-      $("entHostYear").textContent = money(entHost * 12, symbol);
-      $("entImpl").textContent = money(impl, symbol);
-      $("entYear").textContent = money(entYear, symbol) + " / السنة الأولى";
+      $("entRate").textContent = rate.toFixed(2) + " ر.س";
+      $("entLicMonth").textContent = money(entLicMonth);
+      $("entLicYear").textContent = money(entLicMonth * 12);
+      $("entHostYear").textContent = money(entHost * 12);
+      $("entImpl").textContent = money(impl);
+      $("entYear").textContent = money(entYear) + " / السنة الأولى";
 
       const diff = entYear - commYear;
       const perUserYear = entLicMonth * 12 / users;
 
       if (diff > 0) {
-        $("diffTitle").textContent = "Enterprise أعلى في السنة الأولى بـ " + money(diff, symbol);
+        $("diffTitle").textContent = "Enterprise أعلى في السنة الأولى بـ " + money(diff);
         $("diffText").textContent =
-          `مقابل ذلك تحصل على ميزات ودعم وترقيات رسمية. تكلفة ترخيص Enterprise ≈ ${money(perUserYear, symbol)} لكل مستخدم / سنة (${users} مستخدمين، خطة ${plan === "custom" ? "Custom" : "Standard"}).`;
+          `مقابل ذلك تحصل على ميزات ودعم وترقيات رسمية. تكلفة ترخيص Enterprise ≈ ${money(perUserYear)} لكل مستخدم / سنة (${users} مستخدمين، خطة ${plan === "custom" ? "Custom" : "Standard"}).`;
       } else if (diff < 0) {
-        $("diffTitle").textContent = "Enterprise أوفر في هذا السيناريو بـ " + money(Math.abs(diff), symbol);
+        $("diffTitle").textContent = "Enterprise أوفر في هذا السيناريو بـ " + money(Math.abs(diff));
         $("diffText").textContent =
           "غالبًا لأن تكلفة صيانة Community مرتفعة. راجع أرقام الاستضافة والدعم — قد تكون Enterprise أوفر تشغيليًا.";
       } else {
@@ -1479,11 +1481,11 @@
     // Sensible host default when switching Enterprise plan
     document.querySelectorAll('input[name="entPlan"]').forEach((el) => {
       el.addEventListener("change", () => {
-        if (el.value === "standard" && Number($("entHost").value) === 80) {
+        if (el.value === "standard" && Number($("entHost").value) === CUSTOM_HOST_DEFAULT) {
           $("entHost").value = 0;
         }
         if (el.value === "custom" && Number($("entHost").value) === 0) {
-          $("entHost").value = 80;
+          $("entHost").value = CUSTOM_HOST_DEFAULT;
         }
         calcPricing();
       });
