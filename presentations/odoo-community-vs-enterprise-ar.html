@@ -544,8 +544,204 @@
       line-height: 1.55;
     }
 
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 0.9rem;
+      flex: 1;
+      min-height: 0;
+      align-content: start;
+    }
+
+    .calc-form {
+      display: grid;
+      gap: 0.65rem;
+      align-content: start;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.28rem;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--odoo-deep);
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.65rem 0.8rem;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(1, 126, 132, 0.12);
+    }
+
+    .seg {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+    }
+
+    .seg label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.6rem 0.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .seg input { display: none; }
+
+    .seg label:has(input:checked) {
+      background: var(--teal-soft);
+      border-color: rgba(1, 126, 132, 0.35);
+      color: var(--teal);
+    }
+
+    .calc-results {
+      display: grid;
+      gap: 0.65rem;
+      align-content: start;
+    }
+
+    .result-card {
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 0.95rem 1.05rem;
+    }
+
+    .result-card.community {
+      background: linear-gradient(180deg, #ffffff, #eef8f8);
+    }
+
+    .result-card.enterprise {
+      background: linear-gradient(180deg, #ffffff, #faf3e6);
+    }
+
+    .result-card .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.55rem;
+    }
+
+    .result-card h3 {
+      font-family: "Noto Kufi Arabic", sans-serif;
+      font-size: 1.05rem;
+      color: var(--odoo-deep);
+    }
+
+    .result-card .total {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--teal);
+      margin: 0.15rem 0 0.45rem;
+    }
+
+    .result-card.enterprise .total { color: #8a5a1d; }
+
+    .breakdown {
+      display: grid;
+      gap: 0.28rem;
+      font-size: 0.86rem;
+      color: var(--ink-soft);
+    }
+
+    .breakdown div {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .diff-card {
+      border-radius: 16px;
+      padding: 0.9rem 1.05rem;
+      background: linear-gradient(120deg, rgba(113,75,103,0.1), rgba(1,126,132,0.1));
+      border: 1px solid var(--line);
+    }
+
+    .diff-card strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--odoo-deep);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+    }
+
+    .tier {
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 1rem;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .tier .name {
+      font-family: "Noto Kufi Arabic", sans-serif;
+      font-weight: 700;
+      color: var(--odoo-deep);
+    }
+
+    .tier .amt {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--teal);
+    }
+
+    .tier ul {
+      list-style: none;
+      display: grid;
+      gap: 0.3rem;
+      margin-top: 0.25rem;
+    }
+
+    .tier li {
+      font-size: 0.86rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .tier li::before {
+      content: "•";
+      color: var(--teal);
+      margin-left: 0.35rem;
+    }
+
     @media (max-width: 920px) {
-      .hero-grid, .cols-2, .cols-3, .cost-box, .agenda, .app-grid {
+      .hero-grid, .cols-2, .cols-3, .cost-box, .agenda, .app-grid,
+      .calc-layout, .price-tiers, .field-row {
         grid-template-columns: 1fr 1fr;
       }
       .hint { display: none; }
@@ -556,7 +752,8 @@
     }
 
     @media (max-width: 640px) {
-      .app-grid, .agenda, .cols-2, .cols-3, .cost-box, .hero-grid {
+      .app-grid, .agenda, .cols-2, .cols-3, .cost-box, .hero-grid,
+      .calc-layout, .price-tiers, .field-row {
         grid-template-columns: 1fr;
       }
     }
@@ -610,7 +807,7 @@
             <div class="agenda-item"><div class="agenda-num">1</div><div>الفرق بجملة واحدة</div></div>
             <div class="agenda-item"><div class="agenda-num">2</div><div>ماذا يوجد في النسختين؟</div></div>
             <div class="agenda-item"><div class="agenda-num">3</div><div>ماذا يزيد في Enterprise فقط؟</div></div>
-            <div class="agenda-item"><div class="agenda-num">4</div><div>التكلفة الحقيقية (ليس الترخيص فقط)</div></div>
+            <div class="agenda-item"><div class="agenda-num">4</div><div>حاسبة التسعير للنسختين</div></div>
             <div class="agenda-item"><div class="agenda-num">5</div><div>سيناريوهات شركات مشابهة</div></div>
             <div class="agenda-item"><div class="agenda-num">6</div><div>توصية واضحة وخطوات تالية</div></div>
           </div>
@@ -797,39 +994,154 @@
       </div>
     </section>
 
-    <!-- 8 Cost -->
-    <section class="slide" data-title="التكلفة الحقيقية">
+    <!-- 8 Pricing structure -->
+    <section class="slide" data-title="هيكل التسعير">
       <div class="slide-shell">
         <div class="slide-inner">
           <div class="topbar">
             <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
-            <span class="kicker">التكلفة كما يفهمها صاحب القرار</span>
+            <span class="kicker">كيف يُحسب السعر؟</span>
           </div>
-          <h2>التكلفة الحقيقية… ليست سعر الترخيص فقط</h2>
-          <div class="cost-box">
-            <div class="cost-card">
-              <h3>Community</h3>
-              <div class="price">ترخيص = 0</div>
-              <ul class="panel" style="border:none;padding:0;background:transparent;">
-                <li>تدفع: سيرفر + صيانة + نسخ احتياطي</li>
-                <li>تدفع: تطوير وتخصيص عند الحاجة</li>
-                <li>تدفع: وقت فريقك أو أتعاب الشريك</li>
-                <li>لا يوجد دعم رسمي من أودو</li>
+          <h2>هيكل التسعير للنسختين</h2>
+          <div class="price-tiers">
+            <div class="tier">
+              <div class="name">Community</div>
+              <div class="amt">$0 ترخيص</div>
+              <ul>
+                <li>لا رسوم مستخدمين لأودو</li>
+                <li>تدفع الاستضافة والصيانة</li>
+                <li>الدعم عبر شريكك / فريقك</li>
               </ul>
             </div>
-            <div class="cost-card">
-              <h3>Enterprise</h3>
-              <div class="price">اشتراك لكل مستخدم / شهر</div>
-              <ul class="panel" style="border:none;padding:0;background:transparent;">
-                <li>تدفع: رخصة Enterprise (سنويًا عادة)</li>
-                <li>تحصل: ميزات إضافية + دعم رسمي</li>
-                <li>خيارات استضافة جاهزة من أودو</li>
-                <li>ترقيات أسهل وأكثر أمانًا</li>
+            <div class="tier">
+              <div class="name">Enterprise Standard</div>
+              <div class="amt">من ≈ $9–31 / مستخدم</div>
+              <ul>
+                <li>كل التطبيقات</li>
+                <li>استضافة Odoo Online</li>
+                <li>دعم رسمي وترقيات</li>
+              </ul>
+            </div>
+            <div class="tier">
+              <div class="name">Enterprise Custom</div>
+              <div class="amt">من ≈ $14–61 / مستخدم</div>
+              <ul>
+                <li>Studio + شركات متعددة + API</li>
+                <li>Online / Odoo.sh / ذاتي</li>
+                <li>الأكثر مرونة للتخصيص</li>
               </ul>
             </div>
           </div>
-          <p class="note">الأسعار تختلف حسب الدولة وعدد المستخدمين وخطة الاستضافة. نجهّز لك عرض سعر مخصص بعد تحديد عدد المستخدمين والوحدات المطلوبة.</p>
-          <div class="takeaway"><strong>قاعدة ذهبية:</strong> قارن «التكلفة الإجمالية لمدة سنة» وليس «هل الترخيص مجاني؟»</div>
+          <div class="cols-2" style="margin-top:0.2rem;">
+            <div class="panel">
+              <h3>Community = تكلفة تشغيل</h3>
+              <p>سيرفر + نسخ احتياطي + صيانة/دعم شهري (+ تنفيذ أولي إن وجد).</p>
+            </div>
+            <div class="panel">
+              <h3>Enterprise = ترخيص × المستخدمين</h3>
+              <p>السعر الشهري لكل مستخدم × 12، ويختلف حسب الدولة وخطة Standard/Custom.</p>
+            </div>
+          </div>
+          <p class="note">مرجع الأسعار الرسمية: odoo.com/pricing — الأسعار المعروضة تقريبية للاجتماع، والعرض النهائي يُحدَّد حسب دولة العميل وعدد المستخدمين.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 Pricing calculator -->
+    <section class="slide" data-title="حاسبة التسعير">
+      <div class="slide-shell">
+        <div class="slide-inner">
+          <div class="topbar">
+            <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
+            <span class="kicker">احسب أمام العميل مباشرة</span>
+          </div>
+          <h2>حاسبة مقارنة التكلفة السنوية</h2>
+          <div class="calc-layout">
+            <div class="calc-form panel" style="margin:0;">
+              <div class="field-row">
+                <div class="field">
+                  <label for="users">عدد المستخدمين</label>
+                  <input id="users" type="number" min="1" max="500" value="10" />
+                </div>
+                <div class="field">
+                  <label for="region">المنطقة / قائمة الأسعار</label>
+                  <select id="region">
+                    <option value="mena" selected>الشرق الأوسط (USD)</option>
+                    <option value="eu">أوروبا (EUR)</option>
+                    <option value="us">الولايات المتحدة (USD)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>خطة Enterprise</label>
+                <div class="seg">
+                  <label><input type="radio" name="entPlan" value="standard" checked /> Standard</label>
+                  <label><input type="radio" name="entPlan" value="custom" /> Custom</label>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="commHost">Community — استضافة شهرية</label>
+                  <input id="commHost" type="number" min="0" step="1" value="50" />
+                </div>
+                <div class="field">
+                  <label for="commMaint">Community — صيانة/دعم شهري</label>
+                  <input id="commMaint" type="number" min="0" step="1" value="200" />
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="entHost">Enterprise — استضافة إضافية شهرية</label>
+                  <input id="entHost" type="number" min="0" step="1" value="0" />
+                </div>
+                <div class="field">
+                  <label for="implCost">تنفيذ أولي لمرة واحدة (اختياري)</label>
+                  <input id="implCost" type="number" min="0" step="100" value="0" />
+                </div>
+              </div>
+
+              <p class="note">Standard غالبًا استضافة Online ضمن الاشتراك (0 إضافية). لـ Custom على Odoo.sh أضف تكلفة الاستضافة يدويًا.</p>
+            </div>
+
+            <div class="calc-results">
+              <div class="result-card community">
+                <div class="head">
+                  <h3>Community</h3>
+                  <span class="badge">ترخيص مجاني</span>
+                </div>
+                <div class="total" id="commYear">—</div>
+                <div class="breakdown">
+                  <div><span>شهريًا</span><strong id="commMonth">—</strong></div>
+                  <div><span>استضافة سنويًا</span><span id="commHostYear">—</span></div>
+                  <div><span>صيانة سنويًا</span><span id="commMaintYear">—</span></div>
+                  <div><span>تنفيذ لمرة واحدة</span><span id="commImpl">—</span></div>
+                </div>
+              </div>
+
+              <div class="result-card enterprise">
+                <div class="head">
+                  <h3>Enterprise</h3>
+                  <span class="badge paid" id="entBadge">Standard</span>
+                </div>
+                <div class="total" id="entYear">—</div>
+                <div class="breakdown">
+                  <div><span>سعر المستخدم / شهر</span><strong id="entRate">—</strong></div>
+                  <div><span>ترخيص شهري</span><span id="entLicMonth">—</span></div>
+                  <div><span>ترخيص سنوي</span><span id="entLicYear">—</span></div>
+                  <div><span>استضافة إضافية سنويًا</span><span id="entHostYear">—</span></div>
+                  <div><span>تنفيذ لمرة واحدة</span><span id="entImpl">—</span></div>
+                </div>
+              </div>
+
+              <div class="diff-card">
+                <strong id="diffTitle">فرق السنة الأولى</strong>
+                <span id="diffText" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1015,7 +1327,7 @@
             </div>
           </div>
           <p class="one-line" style="font-size:clamp(1.1rem,2.2vw,1.45rem);">هل نبدأ بحصر متطلباتكم ونجهّز توصية مخصصة خلال أيام؟</p>
-          <p class="note">المصادر المرجعية للمقارنة: صفحة إصدارات أودو الرسمية odoo.com/page/editions — والأيقونات من مكتبة تطبيقات أودو.</p>
+          <p class="note">المصادر: odoo.com/page/editions و odoo.com/pricing — حاسبة التسعير تقديرية للاجتماع، والعرض النهائي يُخصَّص حسب دولة العميل.</p>
         </div>
       </div>
     </section>
@@ -1059,7 +1371,14 @@
     prevBtn.addEventListener("click", () => go(-1));
     nextBtn.addEventListener("click", () => go(1));
 
+    function isTypingTarget(el) {
+      if (!el) return false;
+      const tag = el.tagName;
+      return tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA" || el.isContentEditable;
+    }
+
     window.addEventListener("keydown", (e) => {
+      if (isTypingTarget(e.target)) return;
       if (["ArrowLeft", "PageDown", " ", "Enter"].includes(e.key)) {
         e.preventDefault(); go(1);
       } else if (["ArrowRight", "PageUp", "Backspace"].includes(e.key)) {
@@ -1081,6 +1400,96 @@
       touchX = null;
     });
 
+    /* ===== Pricing calculator =====
+       Approximate yearly-billed official rates for client meetings.
+       Source baseline: odoo.com/pricing + regional pricelists.
+    */
+    const PRICING = {
+      mena: { currency: "USD", symbol: "$", standard: 8.95, custom: 13.60 },
+      eu:   { currency: "EUR", symbol: "€", standard: 24.90, custom: 37.40 },
+      us:   { currency: "USD", symbol: "$", standard: 31.10, custom: 61.00 }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function money(amount, symbol) {
+      const n = Math.round(amount);
+      return symbol + n.toLocaleString("en-US");
+    }
+
+    function calcPricing() {
+      const users = Math.max(1, Number($("users").value) || 1);
+      const regionKey = $("region").value;
+      const region = PRICING[regionKey];
+      const plan = document.querySelector('input[name="entPlan"]:checked')?.value || "standard";
+      const rate = region[plan];
+      const symbol = region.symbol;
+
+      const commHost = Math.max(0, Number($("commHost").value) || 0);
+      const commMaint = Math.max(0, Number($("commMaint").value) || 0);
+      const entHost = Math.max(0, Number($("entHost").value) || 0);
+      const impl = Math.max(0, Number($("implCost").value) || 0);
+
+      const commMonth = commHost + commMaint;
+      const commYear = commMonth * 12 + impl;
+
+      const entLicMonth = users * rate;
+      const entMonth = entLicMonth + entHost;
+      const entYear = entMonth * 12 + impl;
+
+      $("commMonth").textContent = money(commMonth, symbol) + " / شهر";
+      $("commYear").textContent = money(commYear, symbol) + " / السنة الأولى";
+      $("commHostYear").textContent = money(commHost * 12, symbol);
+      $("commMaintYear").textContent = money(commMaint * 12, symbol);
+      $("commImpl").textContent = money(impl, symbol);
+
+      $("entBadge").textContent = plan === "custom" ? "Custom" : "Standard";
+      $("entRate").textContent = symbol + rate.toFixed(2);
+      $("entLicMonth").textContent = money(entLicMonth, symbol);
+      $("entLicYear").textContent = money(entLicMonth * 12, symbol);
+      $("entHostYear").textContent = money(entHost * 12, symbol);
+      $("entImpl").textContent = money(impl, symbol);
+      $("entYear").textContent = money(entYear, symbol) + " / السنة الأولى";
+
+      const diff = entYear - commYear;
+      const perUserYear = entLicMonth * 12 / users;
+
+      if (diff > 0) {
+        $("diffTitle").textContent = "Enterprise أعلى في السنة الأولى بـ " + money(diff, symbol);
+        $("diffText").textContent =
+          `مقابل ذلك تحصل على ميزات ودعم وترقيات رسمية. تكلفة ترخيص Enterprise ≈ ${money(perUserYear, symbol)} لكل مستخدم / سنة (${users} مستخدمين، خطة ${plan === "custom" ? "Custom" : "Standard"}).`;
+      } else if (diff < 0) {
+        $("diffTitle").textContent = "Enterprise أوفر في هذا السيناريو بـ " + money(Math.abs(diff), symbol);
+        $("diffText").textContent =
+          "غالبًا لأن تكلفة صيانة Community مرتفعة. راجع أرقام الاستضافة والدعم — قد تكون Enterprise أوفر تشغيليًا.";
+      } else {
+        $("diffTitle").textContent = "التكلفة متقاربة في السنة الأولى";
+        $("diffText").textContent = "عند تساوي التكلفة، القرار يعتمد على الميزات المطلوبة ومستوى الدعم الذي تحتاجه.";
+      }
+    }
+
+    ["users", "region", "commHost", "commMaint", "entHost", "implCost"].forEach((id) => {
+      $(id).addEventListener("input", calcPricing);
+      $(id).addEventListener("change", calcPricing);
+    });
+    document.querySelectorAll('input[name="entPlan"]').forEach((el) => {
+      el.addEventListener("change", calcPricing);
+    });
+
+    // Sensible host default when switching Enterprise plan
+    document.querySelectorAll('input[name="entPlan"]').forEach((el) => {
+      el.addEventListener("change", () => {
+        if (el.value === "standard" && Number($("entHost").value) === 80) {
+          $("entHost").value = 0;
+        }
+        if (el.value === "custom" && Number($("entHost").value) === 0) {
+          $("entHost").value = 80;
+        }
+        calcPricing();
+      });
+    });
+
+    calcPricing();
     render();
   </script>
 </body>
