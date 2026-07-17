@@ -553,6 +553,47 @@
       align-content: start;
     }
 
+    .calc-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .calc-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      min-width: 0;
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .calc-column.community {
+      background: linear-gradient(180deg, #ffffff, #eef8f8);
+    }
+
+    .calc-column.enterprise {
+      background: linear-gradient(180deg, #ffffff, #faf3e6);
+    }
+
+    .calc-column .calc-form {
+      gap: 0.55rem;
+    }
+
+    .calc-column .result-card {
+      margin-top: auto;
+      background: rgba(255,255,255,0.85);
+    }
+
+    .calc-column .diff-card {
+      padding: 0.7rem 0.85rem;
+    }
+
     .calc-form {
       display: grid;
       gap: 0.65rem;
@@ -741,7 +782,7 @@
 
     @media (max-width: 920px) {
       .hero-grid, .cols-2, .cols-3, .cost-box, .agenda, .app-grid,
-      .calc-layout, .price-tiers, .field-row {
+      .calc-layout, .calc-split, .price-tiers, .field-row {
         grid-template-columns: 1fr 1fr;
       }
       .hint { display: none; }
@@ -753,7 +794,7 @@
 
     @media (max-width: 640px) {
       .app-grid, .agenda, .cols-2, .cols-3, .cost-box, .hero-grid,
-      .calc-layout, .price-tiers, .field-row {
+      .calc-layout, .calc-split, .price-tiers, .field-row {
         grid-template-columns: 1fr;
       }
     }
@@ -807,7 +848,7 @@
             <div class="agenda-item"><div class="agenda-num">1</div><div>الفرق بجملة واحدة</div></div>
             <div class="agenda-item"><div class="agenda-num">2</div><div>ماذا يوجد في النسختين؟</div></div>
             <div class="agenda-item"><div class="agenda-num">3</div><div>ماذا يزيد في Enterprise فقط؟</div></div>
-            <div class="agenda-item"><div class="agenda-num">4</div><div>حاسبة Community ثم Enterprise</div></div>
+            <div class="agenda-item"><div class="agenda-num">4</div><div>حاسبة Community و Enterprise معًا</div></div>
             <div class="agenda-item"><div class="agenda-num">5</div><div>سيناريوهات شركات مشابهة</div></div>
             <div class="agenda-item"><div class="agenda-num">6</div><div>توصية واضحة وخطوات تالية</div></div>
           </div>
@@ -1047,123 +1088,111 @@
       </div>
     </section>
 
-    <!-- 9 Community calculator -->
-    <section class="slide" data-title="حاسبة Community">
+    <!-- 9 Split calculators on one page -->
+    <section class="slide" data-title="حاسبة التسعير">
       <div class="slide-shell">
         <div class="slide-inner">
           <div class="topbar">
             <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
-            <span class="kicker">حاسبة مستقلة — Community</span>
+            <span class="kicker">حاسبتان منفصلتان في صفحة واحدة — بالريال</span>
           </div>
-          <h2>تكلفة Odoo Community بالريال</h2>
-          <div class="calc-layout">
-            <div class="calc-form panel" style="margin:0;">
-              <div class="field">
-                <label for="commUsers">عدد المستخدمين (للتخطيط فقط)</label>
-                <input id="commUsers" type="number" min="1" max="500" value="10" />
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="commHost">استضافة شهرية (ر.س)</label>
-                  <input id="commHost" type="number" min="0" step="50" value="200" />
-                </div>
-                <div class="field">
-                  <label for="commMaint">صيانة / دعم شهري (ر.س)</label>
-                  <input id="commMaint" type="number" min="0" step="50" value="750" />
-                </div>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="commBackup">نسخ احتياطي / أمان شهري (ر.س)</label>
-                  <input id="commBackup" type="number" min="0" step="50" value="100" />
-                </div>
-                <div class="field">
-                  <label for="commImplInput">تنفيذ أولي لمرة واحدة (ر.س)</label>
-                  <input id="commImplInput" type="number" min="0" step="500" value="0" />
-                </div>
-              </div>
-              <p class="note">Community بلا رسوم ترخيص من أودو. التكلفة = تشغيل النظام (استضافة + صيانة + دعم). جميع المبالغ بالريال السعودي.</p>
-            </div>
+          <h2>احسب Community و Enterprise جنبًا إلى جنب</h2>
 
-            <div class="calc-results">
+          <div class="calc-split">
+            <!-- Community column -->
+            <div class="calc-column community">
+              <div class="edition-head">
+                <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;color:var(--odoo-deep);">Community</h3>
+                <span class="badge">ترخيص = 0</span>
+              </div>
+              <div class="calc-form">
+                <div class="field">
+                  <label for="commUsers">عدد المستخدمين (للتخطيط)</label>
+                  <input id="commUsers" type="number" min="1" max="500" value="10" />
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="commHost">استضافة شهرية</label>
+                    <input id="commHost" type="number" min="0" step="50" value="200" />
+                  </div>
+                  <div class="field">
+                    <label for="commMaint">صيانة / دعم شهري</label>
+                    <input id="commMaint" type="number" min="0" step="50" value="750" />
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="commBackup">نسخ احتياطي شهري</label>
+                    <input id="commBackup" type="number" min="0" step="50" value="100" />
+                  </div>
+                  <div class="field">
+                    <label for="commImplInput">تنفيذ لمرة واحدة</label>
+                    <input id="commImplInput" type="number" min="0" step="500" value="0" />
+                  </div>
+                </div>
+              </div>
               <div class="result-card community">
                 <div class="head">
                   <h3>إجمالي Community</h3>
-                  <span class="badge">ترخيص = 0 ر.س</span>
                 </div>
                 <div class="total" id="commYear">—</div>
                 <div class="breakdown">
-                  <div><span>التشغيل الشهري</span><strong id="commMonth">—</strong></div>
+                  <div><span>تشغيلي شهري</span><strong id="commMonth">—</strong></div>
                   <div><span>استضافة سنويًا</span><span id="commHostYear">—</span></div>
                   <div><span>صيانة سنويًا</span><span id="commMaintYear">—</span></div>
                   <div><span>نسخ احتياطي سنويًا</span><span id="commBackupYear">—</span></div>
                   <div><span>تنفيذ لمرة واحدة</span><span id="commImpl">—</span></div>
-                  <div><span>تكلفة تقريبية / مستخدم / شهر</span><span id="commPerUser">—</span></div>
+                  <div><span>لكل مستخدم / شهر</span><span id="commPerUser">—</span></div>
                 </div>
               </div>
               <div class="diff-card">
-                <strong>ملخص Community</strong>
-                <span id="commSummary" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
+                <strong>ملخص</strong>
+                <span id="commSummary" style="color:var(--ink-soft);font-size:0.88rem;line-height:1.55;"></span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 10 Enterprise calculator -->
-    <section class="slide" data-title="حاسبة Enterprise">
-      <div class="slide-shell">
-        <div class="slide-inner">
-          <div class="topbar">
-            <img class="odoo-logo" src="assets/odoo-logo.png" alt="Odoo" />
-            <span class="kicker">حاسبة مستقلة — Enterprise</span>
-          </div>
-          <h2>تكلفة Odoo Enterprise بالريال</h2>
-          <div class="calc-layout">
-            <div class="calc-form panel" style="margin:0;">
-              <div class="field-row">
-                <div class="field">
-                  <label for="entUsers">عدد المستخدمين</label>
-                  <input id="entUsers" type="number" min="1" max="500" value="10" />
+            <!-- Enterprise column -->
+            <div class="calc-column enterprise">
+              <div class="edition-head">
+                <h3 style="margin:0;font-family:'Noto Kufi Arabic',sans-serif;color:var(--odoo-deep);">Enterprise</h3>
+                <span class="badge paid" id="entBadge">Standard</span>
+              </div>
+              <div class="calc-form">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="entUsers">عدد المستخدمين</label>
+                    <input id="entUsers" type="number" min="1" max="500" value="10" />
+                  </div>
+                  <div class="field">
+                    <label for="region">قائمة الأسعار</label>
+                    <select id="region">
+                      <option value="mena" selected>السعودية / الشرق الأوسط</option>
+                      <option value="eu">أوروبا (محوّل لر.س)</option>
+                      <option value="us">أمريكا (محوّل لر.س)</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="field">
-                  <label for="region">قائمة أسعار أودو (ر.س)</label>
-                  <select id="region">
-                    <option value="mena" selected>السعودية / الشرق الأوسط</option>
-                    <option value="eu">أوروبا (محوّل لر.س)</option>
-                    <option value="us">أمريكا (محوّل لر.س)</option>
-                  </select>
+                  <label>خطة Enterprise</label>
+                  <div class="seg">
+                    <label><input type="radio" name="entPlan" value="standard" checked /> Standard</label>
+                    <label><input type="radio" name="entPlan" value="custom" /> Custom</label>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="entHost">استضافة إضافية شهرية</label>
+                    <input id="entHost" type="number" min="0" step="50" value="0" />
+                  </div>
+                  <div class="field">
+                    <label for="entImplInput">تنفيذ لمرة واحدة</label>
+                    <input id="entImplInput" type="number" min="0" step="500" value="0" />
+                  </div>
                 </div>
               </div>
-
-              <div class="field">
-                <label>خطة Enterprise</label>
-                <div class="seg">
-                  <label><input type="radio" name="entPlan" value="standard" checked /> Standard</label>
-                  <label><input type="radio" name="entPlan" value="custom" /> Custom</label>
-                </div>
-              </div>
-
-              <div class="field-row">
-                <div class="field">
-                  <label for="entHost">استضافة إضافية شهرية (ر.س)</label>
-                  <input id="entHost" type="number" min="0" step="50" value="0" />
-                </div>
-                <div class="field">
-                  <label for="entImplInput">تنفيذ أولي لمرة واحدة (ر.س)</label>
-                  <input id="entImplInput" type="number" min="0" step="500" value="0" />
-                </div>
-              </div>
-
-              <p class="note">السعر = (سعر المستخدم × عدد المستخدمين) + استضافة إضافية إن وجدت. Standard غالبًا بدون استضافة إضافية. لـ Custom على Odoo.sh أضف الاستضافة.</p>
-            </div>
-
-            <div class="calc-results">
               <div class="result-card enterprise">
                 <div class="head">
                   <h3>إجمالي Enterprise</h3>
-                  <span class="badge paid" id="entBadge">Standard</span>
                 </div>
                 <div class="total" id="entYear">—</div>
                 <div class="breakdown">
@@ -1172,12 +1201,12 @@
                   <div><span>ترخيص سنوي</span><span id="entLicYear">—</span></div>
                   <div><span>استضافة إضافية سنويًا</span><span id="entHostYear">—</span></div>
                   <div><span>تنفيذ لمرة واحدة</span><span id="entImpl">—</span></div>
-                  <div><span>التشغيل الشهري الكلي</span><span id="entMonth">—</span></div>
+                  <div><span>تشغيلي شهري كلي</span><span id="entMonth">—</span></div>
                 </div>
               </div>
               <div class="diff-card">
-                <strong>ملخص Enterprise</strong>
-                <span id="entSummary" style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6;"></span>
+                <strong>ملخص</strong>
+                <span id="entSummary" style="color:var(--ink-soft);font-size:0.88rem;line-height:1.55;"></span>
               </div>
             </div>
           </div>
