@@ -1,0 +1,18 @@
+{
+  "title": "تم إرسال طلب الحجز!",
+  "subtitle": "سيتم مراجعة طلبك والرد عليك قريباً",
+  "details": "تفاصيل الحجز",
+  "bookingNumber": "رقم الحجز",
+  "vehicle": "السيارة",
+  "company": "الشركة",
+  "duration": "مدة الإيجار",
+  "estPrice": "السعر التقديري",
+  "vehicleValue": "تويوتا كامري ٢٠٢٤",
+  "companyValue": "الخليج للتأجير",
+  "durationValue": "١٥ - ١٨ يناير",
+  "priceValue": "٦٢١ ريال",
+  "viewBookings": "عرض حجوزاتي",
+  "chat": "تواصل",
+  "cancel": "إلغاء الحجز",
+  "backHome": "العودة للرئيسية"
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Booking Request Sent!",
+  "subtitle": "Your request will be reviewed shortly",
+  "details": "Booking Details",
+  "bookingNumber": "Booking #",
+  "vehicle": "Vehicle",
+  "company": "Company",
+  "duration": "Duration",
+  "estPrice": "Est. Price",
+  "vehicleValue": "Toyota Camry 2024",
+  "companyValue": "Gulf Rental",
+  "durationValue": "Jan 15 - 18, 2024",
+  "priceValue": "621 SAR",
+  "viewBookings": "View My Bookings",
+  "chat": "Chat",
+  "cancel": "Cancel",
+  "backHome": "Back to Home"
+}

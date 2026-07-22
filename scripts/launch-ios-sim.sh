@@ -6,6 +6,7 @@ set -euo pipefail
 BUNDLE_ID="${BUNDLE_ID:-com.anonymous.mersalcar}"
 PORT="${PORT:-8081}"
 DEVICE_NAME="${DEVICE_NAME:-iPhone 17 Pro}"
+APP_PATH="${APP_PATH:-$HOME/Library/Developer/Xcode/DerivedData/mersalcar-bobqeuxmvpjftqgnhgqzigqasazg/Build/Products/Debug-iphonesimulator/mersalcar.app}"
 
 UDID="$(
   xcrun simctl list devices available |
@@ -20,8 +21,34 @@ if [[ -z "${UDID}" ]]; then
   exit 1
 fi
 
-open -a Simulator
+# Prefer Simulator.app; fall back to DeviceHub (Xcode 27+)
+if [[ -d "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" ]]; then
+  open -a Simulator --args -CurrentDeviceUDID "$UDID"
+elif [[ -d "/Applications/Xcode.app/Contents/Applications/DeviceHub.app" ]]; then
+  open -a DeviceHub
+else
+  open -a Simulator || open -a DeviceHub || true
+fi
+
+xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b >/dev/null
-xcrun simctl launch booted "$BUNDLE_ID" >/dev/null || true
-xcrun simctl openurl booted "${BUNDLE_ID}://expo-development-client/?url=http%3A%2F%2Flocalhost%3A${PORT}"
-echo "Opened $BUNDLE_ID on $DEVICE_NAME"
+
+if [[ -d "$APP_PATH" ]]; then
+  xcrun simctl install "$UDID" "$APP_PATH" >/dev/null
+fi
+
+xcrun simctl terminate "$UDID" "$BUNDLE_ID" 2>/dev/null || true
+xcrun simctl launch "$UDID" "$BUNDLE_ID" >/dev/null
+
+# Prefer LAN IP so the sim can reach Metro when not on localhost-only
+LAN_IP="$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || true)"
+if [[ -n "${LAN_IP}" ]]; then
+  METRO_URL="http://${LAN_IP}:${PORT}"
+else
+  METRO_URL="http://localhost:${PORT}"
+fi
+
+ENCODED_URL="$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "$METRO_URL")"
+xcrun simctl openurl "$UDID" "${BUNDLE_ID}://expo-development-client/?url=${ENCODED_URL}"
+
+echo "Opened $BUNDLE_ID on $DEVICE_NAME → $METRO_URL"
