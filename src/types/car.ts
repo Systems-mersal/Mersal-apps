@@ -1,0 +1,23 @@
+export type Car = {
+  id: string;
+  brand: string;
+  model: string;
+  brandEn: string;
+  modelEn: string;
+  year: number;
+  transmission: string;
+  transmissionEn: string;
+  fuel: string;
+  fuelEn: string;
+  seats: number;
+  price: number;
+  rating: number;
+  reviews: number;
+  company: string;
+  companyEn: string;
+  image: string;
+  available: boolean;
+  category: string;
+  badge?: string;
+  mileage: string;
+};

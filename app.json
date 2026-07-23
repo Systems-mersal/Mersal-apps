@@ -2,9 +2,11 @@
   "expo": {
     "name": "mersal-car",
     "slug": "mersal-car",
+    "owner": "khlood36",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "com.anonymous.mersalcar",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
@@ -25,7 +27,15 @@
     },
     "plugins": [
       "expo-router",
-      "expo-status-bar"
-    ]
+      "expo-status-bar",
+      "expo-font",
+      "expo-localization"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b7a81af9-e877-466c-ba86-d0ececdb288d"
+      }
+    }
   }
 }

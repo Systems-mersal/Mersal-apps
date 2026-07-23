@@ -1,0 +1,11 @@
+{
+  "title": "My Bookings",
+  "emptyTitle": "No bookings yet",
+  "emptySubtitle": "Browse cars and book your first ride",
+  "browseCars": "Browse Cars",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "activeBooking": "Active booking",
+  "pickup": "Pickup",
+  "return": "Return"
+}

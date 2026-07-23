@@ -1,0 +1,9 @@
+{
+  "header": "Verification",
+  "title": "Verification Code",
+  "sentTo": "We sent a 6-digit code to",
+  "resendIn": "Resend in",
+  "seconds": "s",
+  "resendCode": "Resend Code",
+  "verify": "Verify"
+}
