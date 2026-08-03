@@ -1,0 +1,24 @@
+{
+  "title": "حسابي",
+  "user-name": "أحمد محمد",
+  "user-email": "ahmed@welm.sa",
+  "account-settings": "إعدادات الحساب",
+  "golden": "عضوية ذهبية",
+  "total-bookings": "إجمالي الحجوزات",
+  "favorite-cars": "السيارات المفضلة",
+  "stats-bookings": "١٢",
+  "stats-favorites": "٥",
+  "logout": "تسجيل الخروج",
+  "copyright": "ويلم لتأجير السيارات الفاخرة © ٢٠٢٦",
+  "version": "v1.0.24 Premium",
+  "rows": {
+    "personal-info": "المعلومات الشخصية",
+    "payment-methods": "طرق الدفع",
+    "notifications": "الإشعارات",
+    "documents": "المستندات",
+    "language": "اللغة",
+    "support": "الدعم والمساعدة",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية"
+  }
+}
