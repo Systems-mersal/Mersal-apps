@@ -1,9 +1,12 @@
 import React, { memo } from "react";
 import { Image, Pressable, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { AppIcon } from "../../../components/icons/AppIcon";
 import { AppText } from "../../../components/typography/AppText";
-import type { Vehicle } from "../../../types";
 import { useVehicleLabel, VehiclePriceRow } from "../../../components/common/CategoryChips";
+import { colors } from "../../../theme/colors";
+import type { Vehicle } from "../../../types";
+import { alertComingSoon } from "../../../utils/comingSoon";
 
 export interface FavoriteVehicleRowProps {
   vehicle: Vehicle;
@@ -18,8 +21,10 @@ export const FavoriteVehicleRow = memo(function FavoriteVehicleRow({
 
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={name}
       onPress={() => onPress(vehicle.id)}
-      className="mb-4 flex-row items-center rounded-[20px] border border-border bg-white p-4"
+      className="mb-4 flex-row items-center rounded-xl border border-border bg-white p-4"
     >
       <View className="flex-1 pe-4">
         <AppText variant="subtitle" numberOfLines={2}>
@@ -35,7 +40,7 @@ export const FavoriteVehicleRow = memo(function FavoriteVehicleRow({
       </View>
       <Image
         source={vehicle.imageSource}
-        className="h-[112px] w-[112px] rounded-2xl"
+        style={{ width: 112, height: 112, borderRadius: 16 }}
         resizeMode="cover"
       />
     </Pressable>
@@ -43,14 +48,26 @@ export const FavoriteVehicleRow = memo(function FavoriteVehicleRow({
 });
 
 export function FavoritesHeaderActions() {
+  const { t } = useTranslation("common");
+
   return (
     <View className="flex-row items-center gap-2">
-      <View className="h-10 w-10 items-center justify-center rounded-full bg-white/15">
-        <AppIcon name="chevron-left" size={20} color="#ffffff" />
-      </View>
-      <View className="h-10 w-10 items-center justify-center rounded-full bg-white/15">
-        <AppIcon name="heart" size={20} color="#ffccaa" />
-      </View>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t("a11y.coming-soon")}
+        onPress={alertComingSoon}
+        className="h-10 w-10 items-center justify-center rounded-full bg-white/15 active:opacity-70"
+      >
+        <AppIcon name="sliders" size={20} color={colors.white} />
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t("a11y.favorite")}
+        onPress={alertComingSoon}
+        className="h-10 w-10 items-center justify-center rounded-full bg-white/15 active:opacity-70"
+      >
+        <AppIcon name="heart" size={20} color={colors.peach} />
+      </Pressable>
     </View>
   );
 }

@@ -10,6 +10,7 @@ import { AppText } from "../../components/typography/AppText";
 import { EXPLORE_VEHICLES } from "../../constants/vehicles";
 import type { MainTabNavigationProp } from "../../navigation/types";
 import { Screen } from "../../components/common/Screen";
+import { alertComingSoon } from "../../utils/comingSoon";
 
 type ExploreFilter = "rating" | "location" | "price" | "type" | "all";
 
@@ -48,7 +49,7 @@ export function ExploreScreen() {
         <SearchBar
           variant="explore"
           placeholder={t("search-placeholder")}
-          onFilterPress={() => undefined}
+          onFilterPress={alertComingSoon}
           className="mb-4 border-white/20"
         />
         <HorizontalCategoryChips
@@ -63,7 +64,7 @@ export function ExploreScreen() {
         scrollable
         edges={[]}
         className="bg-backgroundWarm"
-        contentClassName="px-6 pt-5"
+        contentClassName="pt-5"
         contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
       >
         <View className="mb-4 flex-row items-center justify-between">
@@ -81,6 +82,7 @@ export function ExploreScreen() {
                   key={vehicle.id}
                   vehicle={vehicle}
                   favorited={vehicle.favorite}
+                  onFavoritePress={() => alertComingSoon()}
                   onPress={(vehicleId) =>
                     navigation.navigate("VehicleDetails", { vehicleId })
                   }

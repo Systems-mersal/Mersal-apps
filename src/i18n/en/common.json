@@ -15,5 +15,16 @@
   "back": "Back",
   "next": "Next",
   "done": "Done",
-  "currency": "SAR"
+  "currency": "SAR",
+  "a11y": {
+    "notifications": "Notifications",
+    "filter": "Filter",
+    "search": "Search",
+    "favorite": "Favorite",
+    "add": "Add",
+    "coming-soon": "Coming soon",
+    "country-sa": "Saudi Arabia",
+    "sign-in-apple": "Sign in with Apple",
+    "sign-in-x": "Sign in with X"
+  }
 }

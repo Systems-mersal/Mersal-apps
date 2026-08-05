@@ -1,19 +1,22 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Alert, View } from "react-native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppButton } from "../../components/buttons/AppButton";
 import { AppText } from "../../components/typography/AppText";
-import type { MainTabNavigationProp } from "../../navigation/types";
 import { Screen } from "../../components/common/Screen";
+import { useLanguage } from "../../hooks/useLanguage";
+import { useAuthStore } from "../../stores/auth-store";
+import type { MainTabNavigationProp } from "../../navigation/types";
 import { ProfileHeader, ProfileStats } from "./components/ProfileHeader";
 import { SettingsList } from "./components/SettingsRow";
 
 export function ProfileScreen() {
-  const { t } = useTranslation("profile");
+  const { t } = useTranslation(["profile", "common"]);
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<MainTabNavigationProp<"Profile">>();
+  const { language, toggleLanguage } = useLanguage();
 
   const settingsRows = useMemo(
     () => [
@@ -29,21 +32,49 @@ export function ProfileScreen() {
         label: t("rows.documents"),
         onPress: () => navigation.navigate("Documents"),
       },
-      { key: "language", label: t("rows.language") },
+      {
+        key: "language",
+        label: t("rows.language"),
+        value: language === "ar" ? t("rows.language-ar") : t("rows.language-en"),
+        onPress: () => {
+          void toggleLanguage();
+        },
+      },
       { key: "support", label: t("rows.support") },
       { key: "terms", label: t("rows.terms") },
       { key: "privacy", label: t("rows.privacy") },
     ],
-    [navigation, t],
+    [language, navigation, t, toggleLanguage],
   );
+
+  const clearSession = useAuthStore((state) => state.clearSession);
+
+  const handleLogout = () => {
+    Alert.alert(t("logout-title"), t("logout-message"), [
+      { text: t("common:cancel"), style: "cancel" },
+      {
+        text: t("logout-confirm"),
+        style: "destructive",
+        onPress: () => {
+          clearSession();
+          navigation.getParent()?.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            }),
+          );
+        },
+      },
+    ]);
+  };
 
   return (
     <View className="flex-1 bg-background">
       <View
-        className="bg-primaryDark px-6 pb-8"
-        style={{ paddingTop: insets.top + 8 }}
+        className="bg-primaryDark px-6 pb-3"
+        style={{ paddingTop: insets.top }}
       >
-        <AppText variant="label" className="mb-2 text-white/80">
+        <AppText variant="caption" className="mb-1 text-white/70">
           {t("title")}
         </AppText>
         <ProfileHeader />
@@ -69,7 +100,7 @@ export function ProfileScreen() {
             variant="outline"
             className="mt-6 border-danger"
             textClassName="text-danger"
-            onPress={() => undefined}
+            onPress={handleLogout}
           />
 
           <View className="mt-8 items-center pb-4">

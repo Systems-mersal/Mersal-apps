@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Image, Pressable, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import type { Vehicle } from "../../types";
+import { colors } from "../../theme/colors";
 import { AppIcon } from "../icons/AppIcon";
 import { AppText } from "../typography/AppText";
 import { useVehicleLabel, VehiclePriceRow } from "../common/CategoryChips";
@@ -21,31 +22,40 @@ export const VehicleCard = memo(function VehicleCard({
   onFavoritePress,
   className = "",
 }: VehicleCardProps) {
-  const { t } = useTranslation("explore");
+  const { t } = useTranslation(["explore", "common"]);
   const { name, location } = useVehicleLabel(vehicle);
 
   return (
-    <Pressable
-      onPress={() => onPress(vehicle.id)}
-      className={`flex-1 rounded-2xl border border-border bg-white p-3 ${className}`}
+    <View
+      className={`flex-1 overflow-hidden rounded-2xl border border-border bg-white p-3 ${className}`}
     >
       <View className="relative mb-3 overflow-hidden rounded-xl">
-        <Image
-          source={vehicle.imageSource}
-          className="h-[110px] w-full"
-          resizeMode="cover"
-        />
         <Pressable
-          onPress={() => onFavoritePress?.(vehicle.id)}
-          className="absolute end-2 top-2 h-8 w-8 items-center justify-center rounded-full bg-white/90"
-          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel={name}
+          onPress={() => onPress(vehicle.id)}
         >
-          <AppIcon
-            name="heart"
-            size={16}
-            color={favorited ? "#ef4444" : "#6b7280"}
+          <Image
+            source={vehicle.imageSource}
+            style={{ width: "100%", height: 110 }}
+            resizeMode="cover"
           />
         </Pressable>
+        {onFavoritePress ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("common:a11y.favorite")}
+            onPress={() => onFavoritePress(vehicle.id)}
+            className="absolute end-2 top-2 h-8 w-8 items-center justify-center rounded-full bg-white/90"
+            hitSlop={8}
+          >
+            <AppIcon
+              name="heart"
+              size={16}
+              color={favorited ? colors.danger : colors.textMuted}
+            />
+          </Pressable>
+        ) : null}
         {vehicle.instantBook ? (
           <View className="absolute start-2 top-2 rounded-full bg-peach px-2 py-1">
             <AppText variant="caption" className="text-primaryDeep">
@@ -55,14 +65,20 @@ export const VehicleCard = memo(function VehicleCard({
         ) : null}
       </View>
 
-      <AppText variant="label" numberOfLines={1} className="mb-2">
-        {name}
-      </AppText>
-      <VehiclePriceRow
-        price={vehicle.pricePerDay}
-        rating={vehicle.rating}
-        location={location}
-      />
-    </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={name}
+        onPress={() => onPress(vehicle.id)}
+      >
+        <AppText variant="label" numberOfLines={1} className="mb-2">
+          {name}
+        </AppText>
+        <VehiclePriceRow
+          price={vehicle.pricePerDay}
+          rating={vehicle.rating}
+          location={location}
+        />
+      </Pressable>
+    </View>
   );
 });

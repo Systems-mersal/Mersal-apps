@@ -5,6 +5,7 @@ import {
   type PressableProps,
   View,
 } from "react-native";
+import { colors } from "../../theme/colors";
 import { AppText } from "../typography/AppText";
 
 export interface AppButtonProps extends Omit<PressableProps, "children"> {
@@ -44,13 +45,13 @@ export function AppButton({
     <Pressable
       accessibilityRole="button"
       disabled={isDisabled}
-      className={`h-[54px] rounded-[27px] items-center justify-center px-6 ${containerClass} ${
+      className={`h-[54px] items-center justify-center rounded-pill px-6 ${containerClass} ${
         isDisabled ? "opacity-50" : "active:opacity-80"
       } ${className}`}
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={variant === "primary" ? "#ffffff" : "#117066"} />
+        <ActivityIndicator color={variant === "primary" ? colors.white : colors.primary} />
       ) : (
         <AppText variant="button" className={`${labelClass} ${textClassName}`}>
           {label}

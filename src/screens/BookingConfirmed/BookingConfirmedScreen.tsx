@@ -10,6 +10,7 @@ import { AppIcon } from "../../components/icons/AppIcon";
 import { AppText } from "../../components/typography/AppText";
 import { getVehicleById } from "../../constants/vehicles";
 import type { RootStackParamList } from "../../navigation/types";
+import { colors } from "../../theme/colors";
 
 type Props = NativeStackScreenProps<RootStackParamList, "BookingConfirmed">;
 
@@ -73,7 +74,7 @@ export function BookingConfirmedScreen({ navigation, route }: Props) {
     >
       <View className="items-center">
         <View className="h-[100px] w-[100px] items-center justify-center rounded-full bg-primary">
-          <AppIcon name="check" size={40} color="#ffffff" />
+          <AppIcon name="check" size={40} color={colors.white} />
         </View>
         <View className="mt-4 flex-row gap-2">
           <View className="h-2 w-2 rounded-full bg-primary/30" />

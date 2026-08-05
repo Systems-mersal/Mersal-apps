@@ -1,7 +1,6 @@
 import type { Booking } from "../types";
-
-const activeMercedes = require("../assets/figma/bookings/active-mercedes.png");
-const pastBmw = require("../assets/figma/bookings/past-bmw.png");
+import activeMercedes from "../assets/figma/bookings/active-mercedes.png";
+import pastBmw from "../assets/figma/bookings/past-bmw.png";
 
 export const MOCK_BOOKINGS: Booking[] = [
   {

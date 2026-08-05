@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, type PressableProps } from "react-native";
+import { colors } from "../../theme/colors";
 import { AppIcon, type AppIconName } from "../icons/AppIcon";
 
 export interface IconButtonProps extends Omit<PressableProps, "children"> {
@@ -12,7 +13,7 @@ export interface IconButtonProps extends Omit<PressableProps, "children"> {
 export function IconButton({
   name,
   size = 24,
-  color = "#1f2937",
+  color = colors.text,
   className = "",
   ...props
 }: IconButtonProps) {

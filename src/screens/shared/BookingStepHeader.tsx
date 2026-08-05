@@ -1,8 +1,11 @@
 import React from "react";
 import { Pressable, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppIcon } from "../../components/icons/AppIcon";
 import { AppText } from "../../components/typography/AppText";
+import { chevronStart } from "../../lib/rtl";
+import { colors } from "../../theme/colors";
 
 interface BookingStepHeaderProps {
   step: string;
@@ -12,6 +15,7 @@ interface BookingStepHeaderProps {
 
 export function BookingStepHeader({ step, title, onBack }: BookingStepHeaderProps) {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation("common");
 
   return (
     <View
@@ -31,10 +35,11 @@ export function BookingStepHeader({ step, title, onBack }: BookingStepHeaderProp
 
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel={t("back")}
           onPress={onBack}
           className="h-10 w-10 items-center justify-center rounded-full bg-white/15 active:opacity-70"
         >
-          <AppIcon name="chevron-right" size={20} color="#ffffff" />
+          <AppIcon name={chevronStart()} size={20} color={colors.white} />
         </Pressable>
       </View>
     </View>

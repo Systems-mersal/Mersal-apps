@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import type { Vehicle } from "../../types";
+import { colors } from "../../theme/colors";
 import { AppIcon } from "../icons/AppIcon";
 import { AppText } from "../typography/AppText";
 
@@ -26,7 +27,7 @@ export const CategoryChips = memo(function CategoryChips({
           <Pressable
             key={category.key}
             onPress={() => onSelect(category.key)}
-            className={`rounded-full px-4 py-2 ${
+            className={`items-center justify-center rounded-full px-4 py-2 ${
               selected ? "bg-primary" : "border border-border bg-white"
             }`}
           >
@@ -55,8 +56,9 @@ export const HorizontalCategoryChips = memo(function HorizontalCategoryChips({
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerClassName="gap-2 px-6"
+      contentContainerClassName="items-center gap-2 px-6"
       className="-mx-6"
+      style={{ flexGrow: 0 }}
     >
       {props.categories.map((category) => {
           const selected = category.key === props.selectedKey;
@@ -66,7 +68,7 @@ export const HorizontalCategoryChips = memo(function HorizontalCategoryChips({
             <Pressable
               key={category.key}
               onPress={() => props.onSelect(category.key)}
-              className={`rounded-full px-4 py-2 ${
+              className={`items-center justify-center rounded-full px-4 py-2 ${
                 onDark
                   ? selected
                     ? "bg-white"
@@ -130,13 +132,13 @@ export function VehiclePriceRow({
           </AppText>
         </View>
         <View className="flex-row items-center gap-1">
-          <AppIcon name="star" size={14} color="#117066" />
+          <AppIcon name="star" size={14} color={colors.primary} />
           <AppText variant="caption">{rating}</AppText>
         </View>
       </View>
       {location ? (
         <View className="flex-row items-center gap-1">
-          <AppIcon name="map-pin" size={12} color="#6b7280" />
+          <AppIcon name="map-pin" size={12} color={colors.textMuted} />
           <AppText variant="caption" muted>
             {location}
           </AppText>

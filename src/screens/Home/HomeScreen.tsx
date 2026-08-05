@@ -41,34 +41,35 @@ export function HomeScreen() {
       className="bg-background"
       edges={["top", "left", "right"]}
       contentClassName="px-6 pt-2"
-      contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: insets.bottom + 100,
+      }}
     >
-      <HomeHeader onNotificationsPress={() => navigation.navigate("Notifications")} />
-      <BrandBanner />
-      <SearchBar
-        placeholder={t("search-placeholder")}
-        onFilterPress={() => navigation.navigate("Explore")}
-        className="mb-5"
-      />
-      <HorizontalCategoryChips
-        categories={categories}
-        selectedKey={selectedCategory}
-        onSelect={(key) => setSelectedCategory(key as VehicleCategory)}
-        className="mb-6"
-      />
-      <SectionHeader
-        title={t("featured")}
-        actionLabel={t("view-all")}
-        onActionPress={() => navigation.navigate("Explore")}
-        className="mb-4"
-      />
-      <FeaturedVehicleCard
-        vehicle={FEATURED_VEHICLE}
-        onPress={openVehicleDetails}
-        onBookPress={openVehicleDetails}
-      />
-      <ActiveBookingAlert onPress={() => navigation.navigate("Bookings")} />
-      <View className="h-2" />
+      <View className="gap-6 pb-2">
+        <HomeHeader onNotificationsPress={() => navigation.navigate("Notifications")} />
+        <BrandBanner />
+        <SearchBar
+          placeholder={t("search-placeholder")}
+          onFilterPress={() => navigation.navigate("Explore")}
+        />
+        <HorizontalCategoryChips
+          categories={categories}
+          selectedKey={selectedCategory}
+          onSelect={(key) => setSelectedCategory(key as VehicleCategory)}
+        />
+        <SectionHeader
+          title={t("featured")}
+          actionLabel={t("view-all")}
+          onActionPress={() => navigation.navigate("Explore")}
+        />
+        <FeaturedVehicleCard
+          vehicle={FEATURED_VEHICLE}
+          onPress={openVehicleDetails}
+          onBookPress={openVehicleDetails}
+        />
+        <ActiveBookingAlert onPress={() => navigation.navigate("Bookings")} />
+      </View>
     </Screen>
   );
 }

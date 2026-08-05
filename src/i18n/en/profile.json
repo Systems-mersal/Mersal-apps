@@ -9,6 +9,9 @@
   "stats-bookings": "12",
   "stats-favorites": "5",
   "logout": "Log Out",
+  "logout-title": "Log out?",
+  "logout-message": "You will need to sign in again to continue.",
+  "logout-confirm": "Log Out",
   "copyright": "WELM Luxury Car Rental © 2026",
   "version": "v1.0.24 Premium",
   "rows": {
@@ -17,6 +20,8 @@
     "notifications": "Notifications",
     "documents": "Documents",
     "language": "Language",
+    "language-ar": "Arabic",
+    "language-en": "English",
     "support": "Support & Help",
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy"

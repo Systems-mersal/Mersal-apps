@@ -9,6 +9,8 @@ import { AppIcon } from "../../components/icons/AppIcon";
 import { AppText } from "../../components/typography/AppText";
 import { getVehicleById } from "../../constants/vehicles";
 import type { RootStackParamList } from "../../navigation/types";
+import { useBookingDraftStore } from "../../stores/booking-draft-store";
+import { colors } from "../../theme/colors";
 import { BookingStepHeader } from "../shared/BookingStepHeader";
 import { StickyBottomBar } from "../shared/BookingUi";
 
@@ -24,6 +26,7 @@ export function BookingReviewScreen({ navigation, route }: Props) {
   const { t } = useTranslation(["booking-review", "vehicles", "common"]);
   const insets = useSafeAreaInsets();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("mada");
+  const resetDraft = useBookingDraftStore((state) => state.reset);
 
   const vehicle = getVehicleById(route.params.vehicleId);
 
@@ -75,38 +78,38 @@ export function BookingReviewScreen({ navigation, route }: Props) {
           <View className="h-[70px] w-[100px] items-center justify-center overflow-hidden rounded-2xl bg-background">
             <Image
               source={vehicle.imageSource}
-              className="h-[54px] w-[90px]"
+              style={{ width: 90, height: 54 }}
               resizeMode="contain"
             />
           </View>
-          <View className="ml-3 flex-1 items-end justify-center">
-            <AppText variant="label" className="text-right">
+          <View className="ms-3 flex-1 items-end justify-center">
+            <AppText variant="label" className="text-start">
               {vehicleName}
             </AppText>
             <View className="mt-1 flex-row items-center gap-1">
               <AppText variant="caption" muted>
                 {t("date-range")}
               </AppText>
-              <AppIcon name="calendar" size={14} color="#6b7280" />
+              <AppIcon name="calendar" size={14} color={colors.textMuted} />
             </View>
             <View className="mt-1 flex-row items-center gap-1">
               <AppText variant="caption" muted>
                 {t("location-value")}
               </AppText>
-              <AppIcon name="map-pin" size={12} color="#6b7280" />
+              <AppIcon name="map-pin" size={12} color={colors.textMuted} />
             </View>
           </View>
         </View>
 
         <View className="mt-4 rounded-[20px] bg-white px-[18px] py-[18px]">
-          <AppText variant="subtitle" className="mb-4 text-right">
+          <AppText variant="subtitle" className="mb-4 text-start">
             {t("price-breakdown")}
           </AppText>
           <View className="mb-4 h-px bg-border" />
           {priceRows.map((row) => (
             <View key={row.label} className="mb-4 flex-row items-center justify-between">
               <AppText variant="label">{row.amount} {t("common:currency")}</AppText>
-              <AppText variant="body" muted className="flex-1 text-right">
+              <AppText variant="body" muted className="flex-1 text-start">
                 {row.label}
               </AppText>
             </View>
@@ -126,7 +129,7 @@ export function BookingReviewScreen({ navigation, route }: Props) {
               {t("apply")}
             </AppText>
           </Pressable>
-          <View className="ml-3 flex-1 flex-row items-center justify-end gap-2">
+          <View className="ms-3 flex-1 flex-row items-center justify-end gap-2">
             <AppText variant="body" muted>
               {t("promo-placeholder")}
             </AppText>
@@ -134,7 +137,7 @@ export function BookingReviewScreen({ navigation, route }: Props) {
         </View>
 
         <View className="mt-4 rounded-[20px] bg-white px-[18px] py-[18px]">
-          <AppText variant="subtitle" className="mb-4 text-right">
+          <AppText variant="subtitle" className="mb-4 text-start">
             {t("payment-title")}
           </AppText>
           <View className="flex-row gap-2">
@@ -164,7 +167,7 @@ export function BookingReviewScreen({ navigation, route }: Props) {
                   {method.label}
                 </AppText>
                 {method.key === "apple" ? (
-                  <AppIcon name="apple" size={24} color="#1f2937" />
+                  <AppIcon name="apple" size={24} color={colors.text} />
                 ) : null}
               </Pressable>
             ))}
@@ -175,9 +178,10 @@ export function BookingReviewScreen({ navigation, route }: Props) {
       <StickyBottomBar>
         <AppButton
           label={t("confirm-booking")}
-          onPress={() =>
-            navigation.navigate("BookingConfirmed", { vehicleId: vehicle.id })
-          }
+          onPress={() => {
+            resetDraft();
+            navigation.navigate("BookingConfirmed", { vehicleId: vehicle.id });
+          }}
           className="h-[58px] rounded-[29px]"
         />
       </StickyBottomBar>

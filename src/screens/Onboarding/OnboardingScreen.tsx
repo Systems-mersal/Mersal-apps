@@ -1,117 +1,118 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { Image, ImageSourcePropType, Pressable, View } from "react-native";
+import React, { useState } from "react";
+import { Dimensions, Image, Pressable, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { AppButton } from "../../components/buttons/AppButton";
+import { Screen } from "../../components/common/Screen";
 import { AppText } from "../../components/typography/AppText";
+import { setHasSeenOnboarding } from "../../lib/onboarding-storage";
 import type { RootStackParamList } from "../../navigation/types";
-import { fontFamily } from "../../theme/typography";
+import { fontFamily, fontSize } from "../../theme/typography";
+import { LAST_STEP_INDEX, STEPS } from "./constants";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
-type OnboardingStep = 0 | 1 | 2;
 
-const STEP_IMAGES: ImageSourcePropType[] = [
-  require("../../assets/figma/onboarding/step1.png"),
-  require("../../assets/figma/onboarding/step2.png"),
-  require("../../assets/figma/onboarding/step3.png"),
-];
-
-const STEP_KEYS = ["step1", "step2", "step3"] as const;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const IMAGE_HEIGHT = Math.min(380, Math.round(SCREEN_HEIGHT * 0.42));
 
 export function OnboardingScreen({ navigation }: Props) {
   const { t } = useTranslation("onboarding");
-  const [step, setStep] = useState<OnboardingStep>(0);
+  const [step, setStep] = useState(0);
 
-  const stepKey = STEP_KEYS[step];
-  const isLastStep = step === 2;
-
-  const title = t(`${stepKey}.title`);
-  const description = t(`${stepKey}.desc`);
+  const currentStep = STEPS[step] ?? STEPS[0];
+  const isLastStep = step === LAST_STEP_INDEX;
+  const title = t(currentStep.titleKey);
+  const description = t(currentStep.descKey);
   const buttonLabel = isLastStep ? t("get-started") : t("next");
 
-  const indicators = useMemo(
-    () =>
-      STEP_KEYS.map((_, index) => (
-        <View
-          key={index}
-          className={
-            index === step
-              ? "h-[8px] w-[24px] rounded-[4px] bg-primary"
-              : "h-[8px] w-[8px] rounded-[4px] bg-border"
-          }
-        />
-      )),
-    [step],
-  );
-
-  const goToLogin = useCallback(() => {
+  const goToLogin = async () => {
+    await setHasSeenOnboarding();
     navigation.replace("Login");
-  }, [navigation]);
+  };
 
-  const handleSkip = useCallback(() => {
-    goToLogin();
-  }, [goToLogin]);
-
-  const handleNext = useCallback(() => {
-    if (isLastStep) {
-      goToLogin();
+  const handleNext = () => {
+    const nextStep = step + 1;
+    if (nextStep >= STEPS.length) {
+      void goToLogin();
       return;
     }
-    setStep((current) => (current + 1) as OnboardingStep);
-  }, [goToLogin, isLastStep]);
+    setStep(nextStep);
+  };
 
   return (
-    <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-white">
-      <View className="flex-1 px-6">
-        <View className="h-12 justify-center">
-          {!isLastStep ? (
-            <Pressable
-              accessibilityRole="button"
-              onPress={handleSkip}
-              className="self-start active:opacity-70"
-              hitSlop={8}
-            >
-              <AppText variant="body" className="text-textMuted">
-                {t("skip")}
-              </AppText>
-            </Pressable>
-          ) : (
-            <View className="h-6" />
-          )}
-        </View>
-
-        <View className="mt-2 h-[380px] overflow-hidden rounded-[24px]">
-          <Image
-            source={STEP_IMAGES[step]}
-            className="h-full w-full"
-            resizeMode="cover"
-            accessibilityIgnoresInvertColors
-          />
-        </View>
-
-        <View className="mt-8 items-center gap-3 px-2">
-          <AppText
-            className="text-center text-[24px] text-text"
-            style={{ fontFamily: fontFamily.bold, lineHeight: 32 }}
+    <Screen
+      scrollable={false}
+      edges={["top", "bottom"]}
+      className="bg-white"
+      contentClassName="flex-1"
+    >
+      <View className="h-12 justify-center">
+        {!isLastStep ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("skip")}
+            onPress={() => {
+              void goToLogin();
+            }}
+            className="self-start active:opacity-70"
+            hitSlop={8}
           >
-            {title}
-          </AppText>
-          <AppText
-            className="text-center text-[15px] text-textMuted"
-            style={{ fontFamily: fontFamily.semibold, lineHeight: 22 }}
-          >
-            {description}
-          </AppText>
-        </View>
-
-        <View className="mt-8 flex-row items-center justify-center gap-2">{indicators}</View>
-
-        <View className="mt-auto pb-6">
-          <AppButton label={buttonLabel} onPress={handleNext} />
-        </View>
+            <AppText variant="body" className="text-textMuted">
+              {t("skip")}
+            </AppText>
+          </Pressable>
+        ) : (
+          <View className="h-6" />
+        )}
       </View>
-    </SafeAreaView>
+
+      <View className="mt-2 w-full overflow-hidden rounded-xl" style={{ height: IMAGE_HEIGHT }}>
+        <Image
+          source={currentStep.image}
+          style={{ width: "100%", height: "100%" }}
+          resizeMode="cover"
+          accessibilityLabel={title}
+          accessibilityIgnoresInvertColors
+        />
+      </View>
+
+      <View className="mt-6 items-center gap-3 px-2">
+        <AppText
+          className="text-center text-text"
+          style={{ fontFamily: fontFamily.bold, fontSize: fontSize.xxl, lineHeight: 32 }}
+        >
+          {title}
+        </AppText>
+        <AppText
+          className="text-center text-textMuted"
+          style={{ fontFamily: fontFamily.semibold, fontSize: fontSize.label, lineHeight: 22 }}
+        >
+          {description}
+        </AppText>
+      </View>
+
+      <View
+        accessible
+        accessibilityRole="adjustable"
+        accessibilityLabel={`${step + 1} / ${STEPS.length}`}
+        className="mt-6 flex-row items-center justify-center gap-2"
+      >
+        {STEPS.map((item, index) => (
+          <View
+            key={item.key}
+            className={
+              index === step
+                ? "h-2 w-6 rounded-sm bg-primary"
+                : "h-2 w-2 rounded-sm bg-border"
+            }
+          />
+        ))}
+      </View>
+
+      <View className="mt-auto pb-6">
+        <AppButton label={buttonLabel} onPress={handleNext} />
+      </View>
+    </Screen>
   );
 }

@@ -1,7 +1,9 @@
 import React from "react";
-import { I18nManager, TextInput, View, type TextInputProps } from "react-native";
-import { AppText } from "../typography/AppText";
+import { TextInput, View, type TextInputProps } from "react-native";
+import { writingTextAlign } from "../../lib/rtl";
+import { colors } from "../../theme/colors";
 import { fontFamily } from "../../theme/typography";
+import { AppText } from "../typography/AppText";
 
 export interface AppInputProps extends TextInputProps {
   label?: string;
@@ -25,12 +27,12 @@ export function AppInput({
         </AppText>
       ) : null}
       <TextInput
-        placeholderTextColor="#6b7280"
+        placeholderTextColor={colors.textMuted}
         className={`h-[52px] rounded-2xl border border-border bg-white px-4 text-text ${inputClassName}`}
         style={{
           fontFamily: fontFamily.regular,
           fontSize: 16,
-          textAlign: I18nManager.isRTL ? "right" : "left",
+          textAlign: writingTextAlign(),
         }}
         {...props}
       />

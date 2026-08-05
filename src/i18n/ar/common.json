@@ -15,5 +15,16 @@
   "back": "رجوع",
   "next": "التالي",
   "done": "تم",
-  "currency": "ر.س"
+  "currency": "ر.س",
+  "a11y": {
+    "notifications": "الإشعارات",
+    "filter": "تصفية",
+    "search": "بحث",
+    "favorite": "المفضلة",
+    "add": "إضافة",
+    "coming-soon": "قريباً",
+    "country-sa": "المملكة العربية السعودية",
+    "sign-in-apple": "تسجيل الدخول عبر Apple",
+    "sign-in-x": "تسجيل الدخول عبر X"
+  }
 }

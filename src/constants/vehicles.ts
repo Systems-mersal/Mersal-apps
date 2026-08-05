@@ -1,15 +1,24 @@
 import type { Vehicle } from "../types";
+import heroBmw from "../assets/figma/home/hero-bmw.png";
+import mercedesE350 from "../assets/figma/cars/mercedes-e350.png";
+import porscheCayenne from "../assets/figma/cars/porsche-cayenne.png";
+import teslaModelS from "../assets/figma/cars/tesla-model-s.png";
+import audiA8 from "../assets/figma/cars/audi-a8.png";
+import lexusEs from "../assets/figma/cars/lexus-es.png";
+import bmwX3 from "../assets/figma/cars/bmw-x3.png";
+import audiA6 from "../assets/figma/cars/audi-a6.png";
+import rangeRover from "../assets/figma/cars/range-rover.png";
 
 export const VEHICLE_IMAGES = {
-  "hero-bmw": require("../assets/figma/home/hero-bmw.png"),
-  "mercedes-e350": require("../assets/figma/cars/mercedes-e350.png"),
-  "porsche-cayenne": require("../assets/figma/cars/porsche-cayenne.png"),
-  "tesla-model-s": require("../assets/figma/cars/tesla-model-s.png"),
-  "audi-a8": require("../assets/figma/cars/audi-a8.png"),
-  "lexus-es": require("../assets/figma/cars/lexus-es.png"),
-  "bmw-x3": require("../assets/figma/cars/bmw-x3.png"),
-  "audi-a6": require("../assets/figma/cars/audi-a6.png"),
-  "range-rover": require("../assets/figma/cars/range-rover.png"),
+  "hero-bmw": heroBmw,
+  "mercedes-e350": mercedesE350,
+  "porsche-cayenne": porscheCayenne,
+  "tesla-model-s": teslaModelS,
+  "audi-a8": audiA8,
+  "lexus-es": lexusEs,
+  "bmw-x3": bmwX3,
+  "audi-a6": audiA6,
+  "range-rover": rangeRover,
 } as const;
 
 export const MOCK_VEHICLES: Vehicle[] = [

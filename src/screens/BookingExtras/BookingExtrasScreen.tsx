@@ -7,18 +7,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppButton } from "../../components/buttons/AppButton";
 import { AppText } from "../../components/typography/AppText";
 import type { RootStackParamList } from "../../navigation/types";
+import { useBookingDraftStore } from "../../stores/booking-draft-store";
 import { BookingStepHeader } from "../shared/BookingStepHeader";
 import { StickyBottomBar, ToggleSwitch } from "../shared/BookingUi";
 
 type Props = NativeStackScreenProps<RootStackParamList, "BookingExtras">;
 
-const EXTRA_KEYS = ["insurance", "driver", "childSeat", "gps", "airport"] as const;
+const EXTRA_KEYS = ["insurance", "driver", "child-seat", "gps", "airport"] as const;
 type ExtraKey = (typeof EXTRA_KEYS)[number];
 
 const DEFAULT_SELECTED: Record<ExtraKey, boolean> = {
   insurance: true,
   driver: false,
-  childSeat: true,
+  "child-seat": true,
   gps: false,
   airport: false,
 };
@@ -26,7 +27,7 @@ const DEFAULT_SELECTED: Record<ExtraKey, boolean> = {
 const EXTRA_AMOUNTS: Record<ExtraKey, number> = {
   insurance: 200,
   driver: 150,
-  childSeat: 50,
+  "child-seat": 50,
   gps: 30,
   airport: 100,
 };
@@ -35,6 +36,7 @@ export function BookingExtrasScreen({ navigation, route }: Props) {
   const { t } = useTranslation(["booking-extras", "common"]);
   const insets = useSafeAreaInsets();
   const [selected, setSelected] = useState(DEFAULT_SELECTED);
+  const setExtras = useBookingDraftStore((state) => state.setExtras);
 
   const totalExtras = useMemo(
     () =>
@@ -61,7 +63,7 @@ export function BookingExtrasScreen({ navigation, route }: Props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: insets.bottom + 140, paddingHorizontal: 24 }}
       >
-        <AppText variant="body" muted className="mb-3 mt-1 text-right">
+        <AppText variant="body" muted className="mb-3 mt-1 text-start">
           {t("subtitle")}
         </AppText>
 
@@ -74,15 +76,15 @@ export function BookingExtrasScreen({ navigation, route }: Props) {
               value={selected[key]}
               onValueChange={() => toggleExtra(key)}
             />
-            <View className="ml-4 flex-1 items-end">
-              <AppText variant="label" className="text-right">
-                {t(`items.${key}.name`)}
+            <View className="ms-4 flex-1 items-end">
+              <AppText variant="label" className="text-start">
+                {t(`booking-extras:items.${key}.name`)}
               </AppText>
-              <AppText variant="caption" muted className="mt-1 text-right">
-                {t(`items.${key}.description`)}
+              <AppText variant="caption" muted className="mt-1 text-start">
+                {t(`booking-extras:items.${key}.description`)}
               </AppText>
               <AppText variant="label" className="mt-1 text-primary">
-                {t(`items.${key}.price`)}
+                {t(`booking-extras:items.${key}.price`)}
               </AppText>
             </View>
           </View>
@@ -93,9 +95,10 @@ export function BookingExtrasScreen({ navigation, route }: Props) {
         <View className="flex-row items-center justify-between">
           <AppButton
             label={t("continue")}
-            onPress={() =>
-              navigation.navigate("BookingReview", { vehicleId: route.params.vehicleId })
-            }
+            onPress={() => {
+              setExtras(EXTRA_KEYS.filter((key) => selected[key]));
+              navigation.navigate("BookingReview", { vehicleId: route.params.vehicleId });
+            }}
             className="h-[58px] min-w-[161px] rounded-[29px]"
           />
           <View className="items-end">

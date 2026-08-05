@@ -1,7 +1,10 @@
 import React from "react";
 import { Pressable, TextInput, View } from "react-native";
-import { AppIcon } from "../icons/AppIcon";
+import { useTranslation } from "react-i18next";
+import { writingTextAlign } from "../../lib/rtl";
+import { colors } from "../../theme/colors";
 import { fontFamily } from "../../theme/typography";
+import { AppIcon } from "../icons/AppIcon";
 
 export interface SearchBarProps {
   value?: string;
@@ -20,7 +23,9 @@ export function SearchBar({
   className = "",
   variant = "home",
 }: SearchBarProps) {
+  const { t } = useTranslation("common");
   const isHome = variant === "home";
+  const textAlign = writingTextAlign();
 
   return (
     <View
@@ -28,30 +33,34 @@ export function SearchBar({
         isHome ? "h-[54px] rounded-[16px] gap-3" : "h-[48px] rounded-[12px] gap-3"
       } ${className}`}
     >
-      {isHome && onFilterPress ? (
-        <Pressable
-          onPress={onFilterPress}
-          hitSlop={8}
-          accessibilityRole="button"
-          className="rounded-[8px] bg-primary p-[6px]"
-        >
-          <AppIcon name="sliders" size={18} color="#ffffff" />
-        </Pressable>
-      ) : null}
-
-      {!isHome ? <AppIcon name="sliders" size={18} color="#6b7280" /> : null}
+      {isHome ? (
+        <AppIcon name="search" size={20} color={colors.textMuted} />
+      ) : (
+        <AppIcon name="sliders" size={18} color={colors.textMuted} />
+      )}
 
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor="#6b7280"
-        className="flex-1 text-right text-[14px] text-textMuted"
-        style={{ fontFamily: fontFamily.regular, fontSize: 14 }}
-        textAlign="right"
+        placeholderTextColor={colors.textMuted}
+        className="flex-1 text-start text-[14px] text-textMuted"
+        style={{ fontFamily: fontFamily.regular, fontSize: 14, textAlign }}
       />
 
-      <AppIcon name="search" size={isHome ? 20 : 18} color="#6b7280" />
+      {isHome && onFilterPress ? (
+        <Pressable
+          onPress={onFilterPress}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel={t("a11y.filter")}
+          className="rounded-[8px] bg-primary p-[6px]"
+        >
+          <AppIcon name="sliders" size={18} color={colors.white} />
+        </Pressable>
+      ) : null}
+
+      {!isHome ? <AppIcon name="search" size={18} color={colors.textMuted} /> : null}
     </View>
   );
 }

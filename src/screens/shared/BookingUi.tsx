@@ -9,7 +9,7 @@ interface StickyBottomBarProps {
 export function StickyBottomBar({ children, className = "" }: StickyBottomBarProps) {
   return (
     <View
-      className={`absolute bottom-0 left-0 right-0 border-t border-border bg-white px-6 py-4 ${className}`}
+      className={`absolute inset-x-0 bottom-0 border-t border-border bg-white px-6 py-4 ${className}`}
     >
       {children}
     </View>

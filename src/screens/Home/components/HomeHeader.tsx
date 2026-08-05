@@ -1,29 +1,30 @@
 import React from "react";
 import { Pressable, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import avatarSource from "../../../assets/figma/home/avatar.png";
 import { Avatar } from "../../../components/common/Avatar";
 import { AppIcon } from "../../../components/icons/AppIcon";
 import { AppText } from "../../../components/typography/AppText";
+import { colors } from "../../../theme/colors";
 import { fontFamily } from "../../../theme/typography";
-
-const avatarSource = require("../../../assets/figma/home/avatar.png");
 
 export interface HomeHeaderProps {
   onNotificationsPress: () => void;
 }
 
 export function HomeHeader({ onNotificationsPress }: HomeHeaderProps) {
-  const { t } = useTranslation("home");
+  const { t } = useTranslation(["home", "common"]);
 
   return (
-    <View className="mb-4 flex-row items-center justify-between py-4">
+    <View className="flex-row items-center justify-between py-4">
       <Pressable
         accessibilityRole="button"
+        accessibilityLabel={t("common:a11y.notifications")}
         onPress={onNotificationsPress}
         className="rounded-[14px] border border-border bg-white p-3 active:opacity-70"
         hitSlop={8}
       >
-        <AppIcon name="bell" size={20} color="#1f2937" />
+        <AppIcon name="bell" size={20} color={colors.text} />
       </Pressable>
 
       <View className="flex-row items-center gap-3">

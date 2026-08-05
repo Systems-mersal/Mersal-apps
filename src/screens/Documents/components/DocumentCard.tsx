@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, View } from "react-native";
 import { AppText } from "../../../components/typography/AppText";
+import { alertComingSoon } from "../../../utils/comingSoon";
 
 interface DocumentCardProps {
   title: string;
@@ -30,7 +31,7 @@ export function DocumentCard({
       : "text-text";
 
   return (
-    <View className="mb-3 rounded-[20px] bg-white px-4 py-4">
+    <View className="mb-3 rounded-xl bg-white px-4 py-4">
       <View className="flex-row items-center justify-between">
         <View className={`rounded-full px-2.5 py-1 ${badgeClass}`}>
           <AppText variant="caption" className={badgeTextClass}>
@@ -43,6 +44,8 @@ export function DocumentCard({
       <View className="mt-4 flex-row items-center justify-between">
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel={updateLabel}
+          onPress={alertComingSoon}
           className="rounded-full border border-border px-4 py-2 active:opacity-70"
         >
           <AppText variant="caption">{updateLabel}</AppText>

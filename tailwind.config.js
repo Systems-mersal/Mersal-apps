@@ -1,27 +1,26 @@
+const { colors, spacing, radius } = require("./src/theme/palette.json");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./App.{js,jsx,ts,tsx}",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      colors: {
-        primary: "#117066",
-        primaryDark: "#115e59",
-        primaryDeep: "#0d4a46",
-        peach: "#ffccaa",
-        peachGold: "#fec172",
-        background: "#f9fafb",
-        backgroundWarm: "#f9f6f2",
-        text: "#1f2937",
-        textMuted: "#6b7280",
-        border: "#e5e7eb",
-        success: "#10b981",
-        successBg: "#d1fae5",
-        danger: "#ef4444",
-        white: "#ffffff",
+      colors,
+      spacing: {
+        xs: spacing.xs,
+        sm: spacing.sm,
+        md: spacing.md,
+        lg: spacing.lg,
+        xl: spacing.xl,
+        xxl: spacing.xxl,
+      },
+      borderRadius: {
+        sm: `${radius.sm}px`,
+        md: `${radius.md}px`,
+        lg: `${radius.lg}px`,
+        xl: `${radius.xl}px`,
+        pill: `${radius.pill}px`,
       },
       fontFamily: {
         cairo: ["Cairo_400Regular"],

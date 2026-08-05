@@ -2,10 +2,11 @@ import React, { memo } from "react";
 import { Image, Pressable, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import type { Vehicle } from "../../types";
+import { colors } from "../../theme/colors";
+import { fontFamily } from "../../theme/typography";
 import { AppIcon } from "../icons/AppIcon";
 import { AppText } from "../typography/AppText";
 import { useVehicleLabel } from "../common/CategoryChips";
-import { fontFamily } from "../../theme/typography";
 
 export interface FeaturedVehicleCardProps {
   vehicle: Vehicle;
@@ -24,18 +25,28 @@ export const FeaturedVehicleCard = memo(function FeaturedVehicleCard({
   const { name } = useVehicleLabel(vehicle);
 
   return (
-    <Pressable
-      onPress={() => onPress(vehicle.id)}
+    <View
       className={`overflow-hidden rounded-[20px] border border-border bg-white ${className}`}
     >
-      <Image
-        source={vehicle.imageSource}
-        className="h-[180px] w-full"
-        resizeMode="cover"
-      />
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={name}
+        onPress={() => onPress(vehicle.id)}
+      >
+        <Image
+          source={vehicle.imageSource}
+          style={{ width: "100%", height: 180 }}
+          resizeMode="cover"
+        />
+      </Pressable>
 
       <View className="w-full gap-3 p-4">
-        <View className="w-full flex-row items-center justify-between">
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={name}
+          onPress={() => onPress(vehicle.id)}
+          className="w-full flex-row items-center justify-between"
+        >
           <View className="flex-row items-center gap-1">
             <AppText
               className="text-[13px] text-text"
@@ -43,7 +54,7 @@ export const FeaturedVehicleCard = memo(function FeaturedVehicleCard({
             >
               {vehicle.rating.toFixed(1)}
             </AppText>
-            <AppIcon name="star" size={14} color="#F5B400" />
+            <AppIcon name="star" size={14} color={colors.star} />
           </View>
           <AppText
             className="text-[16px] text-text"
@@ -52,11 +63,12 @@ export const FeaturedVehicleCard = memo(function FeaturedVehicleCard({
           >
             {name}
           </AppText>
-        </View>
+        </Pressable>
 
         <View className="w-full flex-row items-center justify-between">
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel={t("home:book-now")}
             onPress={() => onBookPress(vehicle.id)}
             className="rounded-[10px] bg-primary px-4 py-2 active:opacity-80"
           >
@@ -84,6 +96,6 @@ export const FeaturedVehicleCard = memo(function FeaturedVehicleCard({
           </View>
         </View>
       </View>
-    </Pressable>
+    </View>
   );
 });

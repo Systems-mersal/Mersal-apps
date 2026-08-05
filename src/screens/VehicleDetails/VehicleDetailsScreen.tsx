@@ -4,15 +4,17 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import mapPlaceholder from "../../assets/figma/cars/map-placeholder.png";
+import mercedesDetail from "../../assets/figma/cars/mercedes-detail.png";
 import { AppButton } from "../../components/buttons/AppButton";
 import { AppIcon } from "../../components/icons/AppIcon";
 import { AppText } from "../../components/typography/AppText";
 import { getVehicleById } from "../../constants/vehicles";
+import { chevronStart } from "../../lib/rtl";
 import type { RootStackParamList } from "../../navigation/types";
+import { useBookingDraftStore } from "../../stores/booking-draft-store";
+import { colors } from "../../theme/colors";
 import { StickyBottomBar } from "../shared/BookingUi";
-
-const MERCEDES_DETAIL = require("../../assets/figma/cars/mercedes-detail.png");
-const MAP_PLACEHOLDER = require("../../assets/figma/cars/map-placeholder.png");
 
 type Props = NativeStackScreenProps<RootStackParamList, "VehicleDetails">;
 
@@ -26,8 +28,8 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
   const vehicle = getVehicleById(route.params.vehicleId);
 
   const galleryImage = useMemo(() => {
-    if (!vehicle) return MERCEDES_DETAIL;
-    return vehicle.id === "mercedes-e350" ? MERCEDES_DETAIL : vehicle.imageSource;
+    if (!vehicle) return mercedesDetail;
+    return vehicle.id === "mercedes-e350" ? mercedesDetail : vehicle.imageSource;
   }, [vehicle]);
 
   if (!vehicle) {
@@ -48,7 +50,10 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
       ? t("vehicle-details:electric")
       : t("vehicle-details:petrol");
 
+  const setVehicleId = useBookingDraftStore((state) => state.setVehicleId);
+
   const handleBook = () => {
+    setVehicleId(vehicle.id);
     navigation.navigate("BookingDates", { vehicleId: vehicle.id });
   };
 
@@ -59,31 +64,37 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
         contentContainerStyle={{ paddingBottom: insets.bottom + 120 }}
       >
         <View className="relative h-[260px] w-full">
-          <Image source={galleryImage} className="h-full w-full" resizeMode="cover" />
+          <Image
+            source={galleryImage}
+            style={{ width: "100%", height: "100%" }}
+            resizeMode="cover"
+          />
           <View
-            className="absolute left-0 right-0 top-0 flex-row items-center justify-between px-6"
+            className="absolute inset-x-0 top-0 flex-row items-center justify-between px-6"
             style={{ paddingTop: insets.top + 8 }}
           >
             <Pressable
               accessibilityRole="button"
+              accessibilityLabel={t("common:a11y.favorite")}
               onPress={() => setIsFavorite((prev) => !prev)}
               className="h-[38px] w-[38px] items-center justify-center rounded-full bg-white/90 active:opacity-70"
             >
               <AppIcon
                 name="heart"
                 size={18}
-                color={isFavorite ? "#117066" : "#1f2937"}
+                color={isFavorite ? colors.primary : colors.text}
               />
             </Pressable>
             <Pressable
               accessibilityRole="button"
+              accessibilityLabel={t("common:back")}
               onPress={() => navigation.goBack()}
               className="h-[38px] w-[38px] items-center justify-center rounded-full bg-white/90 active:opacity-70"
             >
-              <AppIcon name="chevron-right" size={18} color="#1f2937" />
+              <AppIcon name={chevronStart()} size={18} color={colors.text} />
             </Pressable>
           </View>
-          <View className="absolute bottom-3 left-0 right-0 flex-row items-center justify-center gap-1.5">
+          <View className="absolute inset-x-0 bottom-3 flex-row items-center justify-center gap-1.5">
             <View className="h-1.5 w-1.5 rounded-full bg-white/50" />
             <View className="h-1.5 w-1.5 rounded-full bg-white/50" />
             <View className="h-1.5 w-[18px] rounded-full bg-white" />
@@ -92,7 +103,7 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
         </View>
 
         <View className="-mt-6 rounded-tl-[24px] rounded-tr-[24px] bg-white px-6 pt-6">
-          <AppText variant="title" className="text-right">
+          <AppText variant="title" className="text-start">
             {t(`vehicles:${vehicle.nameKey}`)}
             {vehicle.year ? ` ${vehicle.year}` : ""}
           </AppText>
@@ -104,7 +115,7 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
             <AppText variant="caption" className="text-text">
               {vehicle.rating}
             </AppText>
-            <AppIcon name="star" size={14} color="#117066" />
+            <AppIcon name="star" size={14} color={colors.primary} />
             <AppText variant="caption" muted>
               •
             </AppText>
@@ -140,7 +151,7 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
             ))}
           </View>
 
-          <AppText variant="subtitle" className="mt-6 text-right">
+          <AppText variant="subtitle" className="mt-6 text-start">
             {t("vehicle-details:features")}
           </AppText>
           <View className="mt-3 flex-row flex-wrap justify-end gap-2">
@@ -151,32 +162,32 @@ export function VehicleDetailsScreen({ navigation, route }: Props) {
             ))}
           </View>
 
-          <AppText variant="subtitle" className="mt-6 text-right">
+          <AppText variant="subtitle" className="mt-6 text-start">
             {t("vehicle-details:terms-title")}
           </AppText>
           <View className="mt-3 rounded-[20px] bg-backgroundWarm px-4 py-4">
             <View className="mb-3 flex-row items-center justify-end gap-2">
-              <AppText variant="body" className="flex-1 text-right">
+              <AppText variant="body" className="flex-1 text-start">
                 {t("vehicle-details:insurance-included")}
               </AppText>
-              <AppIcon name="shield" size={16} color="#117066" />
+              <AppIcon name="shield" size={16} color={colors.primary} />
             </View>
             <View className="flex-row items-center justify-end gap-2">
-              <AppText variant="body" className="flex-1 text-right">
+              <AppText variant="body" className="flex-1 text-start">
                 {t("vehicle-details:mileage-included")}
               </AppText>
-              <AppIcon name="compass" size={16} color="#117066" />
+              <AppIcon name="compass" size={16} color={colors.primary} />
             </View>
           </View>
 
-          <AppText variant="subtitle" className="mt-6 text-right">
+          <AppText variant="subtitle" className="mt-6 text-start">
             {t("vehicle-details:pickup-location")}
           </AppText>
           <View className="relative mt-3 h-[100px] overflow-hidden rounded-[20px]">
-            <Image source={MAP_PLACEHOLDER} className="h-full w-full" resizeMode="cover" />
+            <Image source={mapPlaceholder} className="h-full w-full" resizeMode="cover" />
             <View className="absolute inset-0 items-center justify-center">
               <View className="h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
-                <AppIcon name="map-pin" size={16} color="#117066" />
+                <AppIcon name="map-pin" size={16} color={colors.primary} />
               </View>
             </View>
           </View>

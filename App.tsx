@@ -19,8 +19,9 @@ import { I18nextProvider } from "react-i18next";
 
 import "./src/styles/global.css";
 import i18n from "./src/i18n";
-import { RootNavigator } from "./src/navigation/RootNavigator";
 import { queryClient } from "./src/lib/query-client";
+import { RootNavigator } from "./src/navigation/RootNavigator";
+import { colors } from "./src/theme/colors";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -43,7 +44,7 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator size="large" color="#117066" />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
